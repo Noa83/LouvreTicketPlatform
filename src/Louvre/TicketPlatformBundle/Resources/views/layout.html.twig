@@ -1,0 +1,13 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    Titre - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Insertion du block actif</h1>
+
+    {#insertion des views#}
+    {% block louvreticket_body %}
+    {% endblock %}
+{% endblock %}
