@@ -70,7 +70,7 @@ class Ticket
     /**
      * Set visitDate
      *
-     * @param string $visitDate
+    @param \DateTime $visitDate
      *
      * @return Ticket
      */
@@ -84,7 +84,7 @@ class Ticket
     /**
      * Get visitDate
      *
-     * @return string
+     * @return \DateTime
      */
     public function getVisitDate()
     {
