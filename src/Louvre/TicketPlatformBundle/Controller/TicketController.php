@@ -75,14 +75,14 @@ class TicketController extends Controller
         dump($nbTickets);
 
         $myForm = $this->get('form.factory')->createBuilder();
-        $formModelStep2 = new ArrayCollection();
+
         //Création de la boucle variant en fonction du nb de tickets saisi
         for($i =0; $i<$nbTickets; $i++){
 
-
+            $formModelStep2 = new FormModelStep2();
 
             //Création du formulaire répété
-            $formTicketOwnerIdentity = $this->get('form.factory')->createBuilder($i, FormType::class, $formModelStep2)
+            $formTicketOwnerIdentity = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep2)
             ->add('name',           TextType::class)
             ->add('firstName',      TextType::class)
             ->add('birthDate',      BirthdayType::class)
