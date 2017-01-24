@@ -2,8 +2,10 @@
 
 namespace Louvre\TicketPlatformBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Louvre\TicketPlatformBundle\Entity\Ticket;
-use Louvre\TicketPlatformBundle\Model\FormModel;
+use Louvre\TicketPlatformBundle\Model\FormModelStep1;
+use Louvre\TicketPlatformBundle\Model\FormModelStep2;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -15,19 +17,23 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Louvre\TicketPlatformBundle\FormToEntity;
+use Louvre\TicketPlatformBundle\Model\FormModelConteneurStep2;
 
 class TicketController extends Controller
 {
     public function step1Action(Request $request)
     {
-        //Création d'un objet FormModel
-        $formModel = new FormModel();
 
-        //Creation du formulaire
-        $formStep1 = $this->get('form.factory')->createBuilder(FormType::class, $formModel)
-            ->setAction($this->generateUrl('louvre_ticket_step_2'))
+        //Création d'un objet FormModelStep1
+        $formModelStep1 = new FormModelStep1();
+
+        //Creation du formulaire  quand tout sera ok il faudra sortir le formulaire du controlleur
+        $formStep1 = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep1)
+            //->setAction($this->generateUrl('louvre_ticket_step_2'))
             ->add('visitDate',        DateType::class)
             ->add('ticketType',       ChoiceType::class, array(
                 'choices' =>  array(
@@ -35,55 +41,66 @@ class TicketController extends Controller
                     'Billet Demi-journée'   => 'halfDayTicket',
                 )
             ))
-            ->add('numberOfTickets',  ChoiceType::class, [
-                'choices' => [
-                    '1' => 1,
-                    '2' => 2,
-                    '3' => 3,
-                ]
-            ])
+            ->add('numberOfTickets',  NumberType::class)
             ->add('email',            EmailType::class)
             ->add('validation',       SubmitType::class)
             ->getForm()
         ;
 
-        //Requete
+
+
+        //Requete                mettre du dump partout pour tester et visualiser l'etat de mes variables.
         if ($request->isMethod('POST')) {
             $formStep1->handleRequest($request);
             if ($formStep1->isValid()) {
 
-//
+                $session = $request->getSession();
+
+                $session->set('formModelStep1', $formModelStep1);
+                return $this->redirectToRoute('louvre_ticket_step_2');
             }
         }
 
         //Affichage du formulaire via méthode createView()
-        return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep1->createView(),]);
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep1
+            ->createView(),]);
 
 
     }
 
-    public function step2Action()
+    public function step2Action(Request $request)
     {
-        //Création d'une boucle en fonction du nombre de tickets demandés à l'étape 1
+        //Récupération du nombre de tickets saisi à l'étape 1
+        $nbTickets = $request->getSession()->get('formModelStep1')->getNumberOfTickets();
+        dump($nbTickets);
 
-        //Création d'un objet FormModel
-        $formModel = new FormModel();
+        $myForm = $this->get('form.factory')->createBuilder();
+        $formModelStep2 = new ArrayCollection();
+        //Création de la boucle variant en fonction du nb de tickets saisi
+        for($i =0; $i<$nbTickets; $i++){
 
 
 
-        //Ajout des champs souhaités pour le formulaire
-        $formStep2 = $this->get('form.factory')->createBuilder(FormType::class, $formModel)
+            //Création du formulaire répété
+            $formTicketOwnerIdentity = $this->get('form.factory')->createBuilder($i, FormType::class, $formModelStep2)
             ->add('name',           TextType::class)
             ->add('firstName',      TextType::class)
             ->add('birthDate',      BirthdayType::class)
             ->add('country',        CountryType::class)
-            ->add('reducedPrice',   CheckboxType::class)
-            ->add('validation',     SubmitType::class)
-            ->getForm()
-        ;
+            ->add('reducedPrice',   CheckboxType::class);
+
+            //Insertion du formulaire répété dans le formulaire conteneur
+            $myForm->add($formTicketOwnerIdentity);
+        }
+        //Ajout du bouton validation et Création du formulaire total.
+        $myForm->add('validation',     SubmitType::class);
+        $myForm = $myForm->getForm();
+
+        dump($myForm);
 
         //Affichage du formulaire via méthode createView()
-        return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep2->createView()]);
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $myForm
+            ->createView(),]);
     }
 
     public function step3Action()
