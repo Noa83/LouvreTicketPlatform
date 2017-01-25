@@ -56,6 +56,13 @@ class Ticket
      */
     private $idType;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bookingCode", type="string", length=255)
+     */
+    private $idBookingCode;
+
 
     /**
      * Get id
@@ -185,6 +192,30 @@ class Ticket
     public function getIdType()
     {
         return $this->idType;
+    }
+
+    /**
+     * Set idBookingCode
+     *
+     * @param string $idBookingCode
+     *
+     * @return Ticket
+     */
+    public function setIdBookingCode($idBookingCode)
+    {
+        $this->idBookingCode = $idBookingCode;
+
+        return $this;
+    }
+
+    /**
+     * Get idBookingCode
+     *
+     * @return string
+     */
+    public function getIdBookingCode()
+    {
+        return $this->idBookingCode;
     }
 }
 

@@ -2,26 +2,20 @@
 
 namespace Louvre\TicketPlatformBundle\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Louvre\TicketPlatformBundle\Entity\Ticket;
 use Louvre\TicketPlatformBundle\Model\FormModelStep1;
-use Louvre\TicketPlatformBundle\Model\FormModelStep2;
+use Louvre\TicketPlatformBundle\Model\OwnerStep2;
+use Louvre\TicketPlatformBundle\Type\OwnerStep2Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Louvre\TicketPlatformBundle\FormToEntity;
-use Louvre\TicketPlatformBundle\Model\FormModelConteneurStep2;
+
+
 
 class TicketController extends Controller
 {
@@ -49,7 +43,7 @@ class TicketController extends Controller
 
 
 
-        //Requete                mettre du dump partout pour tester et visualiser l'etat de mes variables.
+        //Requete
         if ($request->isMethod('POST')) {
             $formStep1->handleRequest($request);
             if ($formStep1->isValid()) {
@@ -74,38 +68,46 @@ class TicketController extends Controller
         $nbTickets = $request->getSession()->get('formModelStep1')->getNumberOfTickets();
         dump($nbTickets);
 
-        $myForm = $this->get('form.factory')->createBuilder();
+        $ownerStep2 = new OwnerStep2($nbTickets);
+        $form   = $this->get('form.factory')->create(OwnerStep2Type::class, $ownerStep2);
 
-        //Création de la boucle variant en fonction du nb de tickets saisi
-        for($i =0; $i<$nbTickets; $i++){
 
-            $formModelStep2 = new FormModelStep2();
 
-            //Création du formulaire répété
-            $formTicketOwnerIdentity = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep2)
-            ->add('name',           TextType::class)
-            ->add('firstName',      TextType::class)
-            ->add('birthDate',      BirthdayType::class)
-            ->add('country',        CountryType::class)
-            ->add('reducedPrice',   CheckboxType::class);
+        //Requete
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
 
-            //Insertion du formulaire répété dans le formulaire conteneur
-            $myForm->add($formTicketOwnerIdentity);
+                $session = $request->getSession();
+
+                $session->set('ownerStep2', $ownerStep2);
+                dump($ownerStep2);
+                return $this->redirectToRoute('louvre_ticket_step_3');
+            }
         }
-        //Ajout du bouton validation et Création du formulaire total.
-        $myForm->add('validation',     SubmitType::class);
-        $myForm = $myForm->getForm();
 
-        dump($myForm);
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Step2.html.twig', ['formView' => $form->createView(),]);
 
-        //Affichage du formulaire via méthode createView()
-        return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $myForm
-            ->createView(),]);
     }
 
-    public function step3Action()
+    public function step3Action(Request $request)
     {
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig');
+        //Récupération des infos saisies lors des étapes précedentes:
+        $recapTickets1 = $request->getSession()->get('formModelStep1');
+        $recapTickets2 = $request->getSession()->get('ownerStep2');
+
+        dump($recapTickets1);
+        dump($recapTickets2);
+
+        $email = $recapTickets1->getEmail();
+        dump($email);
+
+
+
+
+
+        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', ['email'
+        => $email]);
 
         return new Response($content);
     }
