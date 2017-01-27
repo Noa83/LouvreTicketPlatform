@@ -1,4 +1,4 @@
-{%  extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+{% extends "LouvreTicketPlatformBundle::layout.html.twig" %}
 
 {% block title %}
     Etape 3 - Récapitulatif / Validation - {{ parent() }}
@@ -6,7 +6,7 @@
 
 {% block louvreticket_body %}
 
-   <h2> Etape 3</h2>
+    <h2> Etape 3</h2>
 
     <div class="well">
         Votre email: {{ recap1.email }}
@@ -17,7 +17,7 @@
         <br/>
         Type de billet réservé: {{ recap1.ticketType }}
     </div>
-    <div class="well">
+    <div>
         <h3>Veuillez controler l'exactitude des informations avant de valider</h3><br/>
         <div class="row">
             {% for form in recap2.form2 %}
@@ -34,7 +34,16 @@
                 </div>
             {% endfor %}
         </div>
-
+        <div class="row">
+            <div class="col-md-offset-10 col-md-2 bg-danger">
+                Total = {{ totalPrice }}€
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4 bg-primary">
+                {{ submit }}
+            </div>
+        </div>
 
 
     </div>
