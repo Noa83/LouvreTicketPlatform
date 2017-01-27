@@ -5,6 +5,7 @@ namespace Louvre\TicketPlatformBundle\Controller;
 use Louvre\TicketPlatformBundle\Model\FormModelStep1;
 use Louvre\TicketPlatformBundle\Model\OwnerStep2;
 use Louvre\TicketPlatformBundle\Type\OwnerStep2Type;
+use Louvre\TicketPlatformBundle\PriceCalculator\PriceCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Repository;
 
 
 
@@ -31,8 +33,8 @@ class TicketController extends Controller
             ->add('visitDate',        DateType::class)
             ->add('ticketType',       ChoiceType::class, array(
                 'choices' =>  array(
-                    'Billet Journée'        => 'fullDayTicket',
-                    'Billet Demi-journée'   => 'halfDayTicket',
+                    'Billet Journée'        => 'Billet Journée',
+                    'Billet Demie-journée'   => 'Billet Demie-journée',
                 )
             ))
             ->add('numberOfTickets',  NumberType::class)
@@ -72,7 +74,6 @@ class TicketController extends Controller
         $form   = $this->get('form.factory')->create(OwnerStep2Type::class, $ownerStep2);
 
 
-
         //Requete
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -82,9 +83,12 @@ class TicketController extends Controller
 
                 $session->set('ownerStep2', $ownerStep2);
                 dump($ownerStep2);
+
                 return $this->redirectToRoute('louvre_ticket_step_3');
             }
         }
+
+
 
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step2.html.twig', ['formView' => $form->createView(),]);
 
@@ -99,15 +103,34 @@ class TicketController extends Controller
         dump($recapTickets1);
         dump($recapTickets2);
 
-        $email = $recapTickets1->getEmail();
-        dump($email);
+        foreach ($recapTickets2->getForm2() as $form) {
+            //Récupération de l'age via le service dédié
+            $ageService = $this->get('louvre_ticketplatform.age_calculator');
+            $age = $ageService->getAgeFromBirthDate($form->getBirthDate());
+            dump($age);
+
+            //Récupération du service de calcul de prix
+            $priceService = $this->get('louvre_ticketplatform.price_calculator');
+            $redPrice = $form->getReducedPrice();
+            $goodPrice = $priceService->getPriceCalc($age, $redPrice, $this->getDoctrine()->getManager());
+            if ($recapTickets1->getTicketType() == 'Billet Demie-journée') {
+                $finalPrice = $goodPrice / 2;
+            } else {
+                $finalPrice = $goodPrice;
+            }
+            dump($finalPrice);
+            $form->setRealPrice($finalPrice);
+        }
+
+        dump($recapTickets2);
 
 
 
-
-
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', ['email'
-        => $email]);
+        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
+            'recap1' => $recapTickets1,
+            'recap2' => $recapTickets2,
+            'finalPrice' => $finalPrice
+        ]);
 
         return new Response($content);
     }
