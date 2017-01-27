@@ -29,7 +29,6 @@ class TicketController extends Controller
 
         //Creation du formulaire  quand tout sera ok il faudra sortir le formulaire du controlleur
         $formStep1 = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep1)
-            //->setAction($this->generateUrl('louvre_ticket_step_2'))
             ->add('visitDate',        DateType::class)
             ->add('ticketType',       ChoiceType::class, array(
                 'choices' =>  array(
@@ -100,17 +99,18 @@ class TicketController extends Controller
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
 
-        dump($recapTickets1);
-        dump($recapTickets2);
 
+        //Parcours du array de données récupérées et usage des services
         foreach ($recapTickets2->getForm2() as $form) {
             //Récupération de l'age via le service dédié
             $ageService = $this->get('louvre_ticketplatform.age_calculator');
+            //Calcul de l'âge de chaque titulaire d'un billet
             $age = $ageService->getAgeFromBirthDate($form->getBirthDate());
-            dump($age);
+
 
             //Récupération du service de calcul de prix
             $priceService = $this->get('louvre_ticketplatform.price_calculator');
+            //Calcul du prix de chaque ticket
             $redPrice = $form->getReducedPrice();
             $goodPrice = $priceService->getPriceCalc($age, $redPrice, $this->getDoctrine()->getManager());
             if ($recapTickets1->getTicketType() == 'Billet Demie-journée') {
@@ -118,19 +118,56 @@ class TicketController extends Controller
             } else {
                 $finalPrice = $goodPrice;
             }
-            dump($finalPrice);
-            $form->setRealPrice($finalPrice);
-        }
 
-        dump($recapTickets2);
+            $form->setRealPrice($finalPrice);
+
+            //Calcul du prix total
+            $totalPrice = 0;
+            foreach ($recapTickets2->getForm2() as $form) {
+                $totalPrice += $form->getRealPrice();
+            }
+
+
+
+
+        }
+        //Creation du bouton d'envoi sur la page suivante
+        //Création d'un objet FormModelStep1
+        $formModelStep1 = new FormModelStep1();
+
+        //Creation du formulaire  quand tout sera ok il faudra sortir le formulaire du controlleur
+        $formStep3 = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep1)
+            ->add('Paiement', SubmitType::class)
+            ->add('Précédent', SubmitType::class, array(
+                'validation_groups' => false)
+            ->getForm()
+        ;
+
+        //Requete
+        if ($request->isMethod('POST')) {
+            $formStep3->handleRequest($request);
+            if ($formStep3->isValid()) {
+
+                $session = $request->getSession();
+                $session->set('totalPrice', $totalPrice);
+
+                return $this->redirectToRoute('louvre_ticket_step_4');
+            }
+        }
 
 
 
         $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
             'recap1' => $recapTickets1,
             'recap2' => $recapTickets2,
-            'finalPrice' => $finalPrice
+            'finalPrice' => $finalPrice,
+            'totalPrice' => $totalPrice,
+            'submit'    => $formStep3
         ]);
+
+//        $session = $request->getSession();
+//        $session->set('totalPrice', $totalPrice);
+
 
         return new Response($content);
     }
