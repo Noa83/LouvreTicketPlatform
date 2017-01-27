@@ -6,10 +6,37 @@
 
 {% block louvreticket_body %}
 
-    Etape 3
+   <h2> Etape 3</h2>
 
     <div class="well">
-        {{ email }}
+        Votre email: {{ recap1.email }}
+        <br/>
+        Date de votre visite: {{ recap1.visitDate|date('d-m-Y') }}
+        <br/>
+        Nombre de billets réservés: {{ recap1.numberOfTickets }}
+        <br/>
+        Type de billet réservé: {{ recap1.ticketType }}
+    </div>
+    <div class="well">
+        <h3>Veuillez controler l'exactitude des informations avant de valider</h3><br/>
+        <div class="row">
+            {% for form in recap2.form2 %}
+                <div class="col-md-10 bg-success">
+                    <p>Nom: {{ form.name }}</p>
+                    <p>Prénom: {{ form.firstName }}</p>
+                    <p>Date de naissance: {{ form.birthDate|date('d-m-Y') }}</p>
+                    <p>Tarif réduit: {{ form.reducedPrice ? 'Oui Un justificatif vous sera demandé lors de votre
+                entrée au musée ':'Non' }}</p>
+                    <br/>
+                </div>
+                <div class="col-md-2 bg-warning">
+                    {{ form.realPrice }}€
+                </div>
+            {% endfor %}
+        </div>
+
+
+
     </div>
 
 {% endblock %}
