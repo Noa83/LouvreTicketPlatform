@@ -18,11 +18,27 @@ class FormModelStep2
     private $birthDate;
     private $country;
     private $reducedPrice;
+    private $realPrice;
+
+    /**
+     * @return mixed
+     */
+    public function getRealPrice()
+    {
+        return $this->realPrice;
+    }
+
+    /**
+     * @param mixed $realPrice
+     */
+    public function setRealPrice($realPrice)
+    {
+        $this->realPrice = $realPrice;
+    }
 
     public function __construct()
     {
         $this->birthDate = new \DateTime();
-
     }
 
     /**
