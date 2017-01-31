@@ -15,6 +15,24 @@ class OwnerStep2
 {
     private $form2;
 
+    private $totalPrice;
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param mixed $totalPrice
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
     public function __construct($nbTickets)
     {
     $this->form2 = new ArrayCollection();

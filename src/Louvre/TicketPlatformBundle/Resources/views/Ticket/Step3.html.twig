@@ -20,7 +20,7 @@
     <div>
         <h3>Veuillez controler l'exactitude des informations avant de valider</h3><br/>
         <div class="row">
-            {% for form in recap2.form2 %}
+            {% for form in recap2.form2 %}<!-- form_start -->
                 <div class="col-md-10 bg-success">
                     <p>Nom: {{ form.name }}</p>
                     <p>Prénom: {{ form.firstName }}</p>
@@ -36,12 +36,12 @@
         </div>
         <div class="row">
             <div class="col-md-offset-10 col-md-2 bg-danger">
-                Total = {{ totalPrice }}€
+                Total = {{ recap2.totalPrice }}€
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-2 col-md-4 bg-primary">
-                {{ submit }}
+            <div class="col-md-offset-2 col-md-8 bg-primary">
+                {{ form(paymentForm) }}
             </div>
         </div>
 

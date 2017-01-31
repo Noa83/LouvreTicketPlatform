@@ -18,6 +18,7 @@ class OwnerStep2Type extends AbstractType
                 'allow_add'    => true
             ))
             ->add('validation',      SubmitType::class);
+        //bonne pratique: ajouter le validation dans le twig directement et l'enlever de la.
 
     }
 

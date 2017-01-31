@@ -1,11 +1,9 @@
 services:
     louvre_ticketplatform.formtoentityinjection:
-        class: Louvre\TicketPlatformBundle\FormToEntity\FormToEntity
+        class: Louvre\TicketPlatformBundle\Services\FormToEntity
 
     louvre_ticketplatform.price_calculator:
-        class: Louvre\TicketPlatformBundle\PriceCalculator\PriceCalculator
+        class: Louvre\TicketPlatformBundle\Services\PriceCalculator
 
-    louvre_ticketplatform.age_calculator:
-        class: Louvre\TicketPlatformBundle\AgeCalculator\AgeCalculator
 
 
