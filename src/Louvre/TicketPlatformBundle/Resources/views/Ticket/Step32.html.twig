@@ -1,0 +1,49 @@
+{%  extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+    Etape 6 - Retour - {{ parent() }}
+{% endblock %}
+
+{% block louvreticket_body %}
+
+    <h2> Etape 3</h2>
+
+    <div class="well">
+        Votre email: {{ recap1.email }}
+        <br/>
+        Date de votre visite: {{ recap1.visitDate|date('d-m-Y') }}
+        <br/>
+        Nombre de billets réservés: {{ recap1.numberOfTickets }}
+        <br/>
+        Type de billet réservé: {{ recap1.ticketType }}
+    </div>
+    <div>
+    <h3>Veuillez controler l'exactitude des informations avant de valider</h3><br/>
+    <div class="row">
+        {% for form in recap2.form2 %}<!-- form_start -->
+        <div class="col-md-10 bg-success">
+            <p>Nom: {{ form.name }}</p>
+            <p>Prénom: {{ form.firstName }}</p>
+            <p>Date de naissance: {{ form.birthDate|date('d-m-Y') }}</p>
+            <p>Tarif réduit: {{ form.reducedPrice ? 'Oui Un justificatif vous sera demandé lors de votre
+                entrée au musée ':'Non' }}</p>
+            <br/>
+        </div>
+        <div class="col-md-2 bg-warning">
+            {{ form.realPrice }}€
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-offset-10 col-md-2 bg-danger">
+            Total = {{ recap2.totalPrice }}€
+        </div>
+    </div>
+
+    <div class="well">
+
+        {{ form(paymentForm) }}
+
+    </div>
+
+{% endblock %}

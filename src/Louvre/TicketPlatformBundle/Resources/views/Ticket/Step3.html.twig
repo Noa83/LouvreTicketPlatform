@@ -40,12 +40,64 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-2 col-md-8 bg-primary">
-                {{ form(paymentForm) }}
+            <div class="col-md-offset-2 col-md-6 bg-primary"><br/>
+                <form id="payment_form" action="" method="post">
+                    <div class="form-group">
+                        <label for="name">Votre nom</label>
+                        <input type="text" placeholder="Votre nom" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Votre numéro de carte bancaire</label>
+                        <input type="text" placeholder="4242 4242 4242 4242" class="form-control" data-stripe="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="expMonth">Mois d'expiration</label>
+                        <input type="text" placeholder="MM" class="form-control" data-stripe="exp_month">
+                    </div>
+                    <div class="form-group">
+                        <label for="expYear">Année d'expiration</label>
+                        <input type="text" placeholder="AA" class="form-control" data-stripe="exp_year">
+                    </div>
+                    <div class="form-group">
+                        <label for="securityCode">Code de sécurité</label>
+                        <input type="text" placeholder="Code de sécurité" class="form-control" data-stripe="cvc">
+                    </div><br/>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Payer</button>
+                    </div>
+                    <br/>
+                </form>
             </div>
         </div>
 
 
     </div>
+
+
+    {% block javascript %}
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <script>
+
+            Stripe.setPublishableKey('pk_test_WjHJkRf8mEI5hYufVKkqlbWw');
+            var $form = $('#payment_form');
+            $form.submit(function(e){
+                e.preventDefault();
+                $form.find('button').attr('disabled', true);
+                Stripe.card.createToken($form, function(status, response){
+                    if (response.error){
+                        $form.find('.message').remove();
+                        $form.prepend('<div>'+ response.error.message + '</div>')
+                    } else {
+                        var token = response.id;
+                        $form.append($('<input type="hidden" name="stripeToken">').val(token));
+                        $form.get(0).submit();
+                    }
+                })
+            })
+
+        </script>
+    {% endblock %}
 
 {% endblock %}
