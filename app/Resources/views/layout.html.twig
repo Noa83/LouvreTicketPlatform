@@ -7,8 +7,10 @@
         <title>{% block title %}Billetterie du Musée du Louvre{% endblock %}</title>
 
         {% block stylesheets %}
+        <link rel="stylesheet"  href="{{ asset('css/style.css') }}"/>
         {#chargement du css Bootstrap via cdn#}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
         {% endblock %}
     </head>
 
@@ -33,19 +35,16 @@
                         <a href="{{ path('louvre_ticket_step_2') }}">2 - Saisie des informations</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_3') }}">3 - Récapitulatif - Validation</a>
+                        <a href="{{ path('louvre_ticket_step_3') }}">3 - Récapitulatif - Paiement</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_4') }}">4 - Paiement</a>
+                        <a href="{{ path('louvre_ticket_step_4') }}">4 - Confirmation de paiement - Email</a>
                     </li>
                     <li>
                         <a href="{{ path('louvre_ticket_step_5') }}">5 - Confirmation</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_6') }}">6 - Fin de transaction</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-success btn-lg" href="http://www.louvre.fr">Retour au site du Musée</a>
+                        <a class="btn btn-warning btn-lg" href="http://www.louvre.fr">Retour au site du Musée</a>
                     </li>
                 </ul>
             </div>
@@ -68,8 +67,8 @@
     </div>
 
     {% block javascripts %}
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     {% endblock %}
 
     </body>

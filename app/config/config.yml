@@ -68,3 +68,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# app/config/config.yml
+flosch_stripe:
+   stripe_api_key: "%stripe_api_key%" # The Stripe API key can be added as a symfony parameter

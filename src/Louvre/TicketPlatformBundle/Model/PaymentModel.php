@@ -11,93 +11,56 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PaymentModel
 {
-    private $name;
-    private $cardNumber;
-    private $expMonth;
-    private $expYear;
-    private $validationCode;
+   private $customerId;
+   private $token;
+   private $reservationCode;
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getReservationCode()
     {
-        return $this->name;
+        return $this->reservationCode;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $reservationCode
      */
-    public function setName($name)
+    public function setReservationCode($reservationCode)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCardNumber()
-    {
-        return $this->cardNumber;
-    }
-
-    /**
-     * @param mixed $cardNumber
-     */
-    public function setCardNumber($cardNumber)
-    {
-        $this->cardNumber = $cardNumber;
+        $this->reservationCode = $reservationCode;
     }
 
     /**
      * @return mixed
      */
-    public function getExpMonth()
+    public function getToken()
     {
-        return $this->expMonth;
+        return $this->token;
     }
 
     /**
-     * @param mixed $expMonth
+     * @param mixed $token
      */
-    public function setExpMonth($expMonth)
+    public function setToken($token)
     {
-        $this->expMonth = $expMonth;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getExpYear()
-    {
-        return $this->expYear;
-    }
-
-    /**
-     * @param mixed $expYear
-     */
-    public function setExpYear($expYear)
-    {
-        $this->expYear = $expYear;
+        $this->token = $token;
     }
 
     /**
      * @return mixed
      */
-    public function getValidationCode()
+    public function getCustomerId()
     {
-        return $this->validationCode;
+        return $this->customerId;
     }
 
     /**
-     * @param mixed $validationCode
+     * @param mixed $customerId
      */
-    public function setValidationCode($validationCode)
+    public function setCustomerId($customerId)
     {
-        $this->validationCode = $validationCode;
+        $this->customerId = $customerId;
     }
-
-
-
 
 }

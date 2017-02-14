@@ -1,7 +1,7 @@
 {% extends "LouvreTicketPlatformBundle::layout.html.twig" %}
 
 {% block title %}
-    Etape 3 - Récapitulatif / Validation - {{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block louvreticket_body %}
@@ -39,12 +39,20 @@
                 Total = {{ recap2.totalPrice }}€
             </div>
         </div>
+
+        {% if errorMessage is defined %}
+        <div class="alert alert-danger">
+            {{ errorMessage }}
+        </div>
+        {% endif %}
+
+
         <div class="row">
             <div class="col-md-offset-2 col-md-6 bg-primary"><br/>
-                <form id="payment_form" action="" method="post">
+                <form id="payment_form"  method="post">
                     <div class="form-group">
                         <label for="name">Votre nom</label>
-                        <input type="text" placeholder="Votre nom" class="form-control">
+                        <input type="text" name = "cardName" placeholder="Votre nom" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="cardNumber">Votre numéro de carte bancaire</label>
@@ -74,9 +82,9 @@
     </div>
 
 
-    {% block javascript %}
+
         <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
         <script>
 
@@ -93,11 +101,12 @@
                         var token = response.id;
                         $form.append($('<input type="hidden" name="stripeToken">').val(token));
                         $form.get(0).submit();
+                        return token;
                     }
                 })
             })
 
         </script>
-    {% endblock %}
+
 
 {% endblock %}

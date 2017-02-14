@@ -5,5 +5,5 @@ services:
     louvre_ticketplatform.price_calculator:
         class: Louvre\TicketPlatformBundle\Services\PriceCalculator
 
-
-
+    louvre_ticketplatform.reservation_code:
+        class: Louvre\TicketPlatformBundle\Services\ReservationCode

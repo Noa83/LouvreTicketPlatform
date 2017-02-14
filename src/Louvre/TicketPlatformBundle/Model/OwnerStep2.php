@@ -17,6 +17,7 @@ class OwnerStep2
 
     private $totalPrice;
 
+
     /**
      * @return mixed
      */
