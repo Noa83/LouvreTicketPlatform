@@ -18,3 +18,5 @@ services:
 
     louvre_ticketplatform.stripe_payment:
         class: Louvre\TicketPlatformBundle\Services\StripePay
+        arguments:
+            - %stripe_api_key%
