@@ -1,0 +1,49 @@
+<!DOCTYPE Html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Confirmation de votre achat{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {% endblock %}
+</head>
+
+<body class="container">
+<header class="row">
+    <div class="col-offset-md-2 col-md-6">
+        <img src="{{ asset('images/Louvre-logo.jpg') }}" alt="logo Louvre">
+    </div>
+    <div class="col-md-4" id="mailTitle">
+        <br>
+        <h2 class="col-md-12">Musée National du Louvre</h2>
+    </div>
+</header>
+<div class="row"><br>
+    <div class="col-md-offset-2 col-md-8">
+        <h2>Votre réservation pour la date du {{ visitDate }} est confirmée</h2><br>
+
+        <h4>Les billets sont nominatifs et concernent les personnes suivantes:</h4><br>
+    </div>
+    <div class="row">
+        {% for form in recap2.form2 %}
+        <div class="col-md-offset-3 col-md-8">
+            <p>Nom: {{ form.name }} </p>
+            <p>Prénom: {{ form.firstName }} </p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            Total = {{ recap2.totalPrice }}€
+        </div>
+    </div><br>
+    <h4 class="col-md-offset-2 col-md-8">Le code de réservation de vos billets est le {{ resCode }}</h4>
+</div>
+
+
+</body>
+</html>
