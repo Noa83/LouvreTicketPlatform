@@ -19,9 +19,9 @@
     </div>
     <div>
         <h3>Veuillez controler l'exactitude des informations avant de valider</h3><br/>
-        <div class="row">
+        <div class="row well">
             {% for form in recap2.form2 %}
-                <div class="col-md-10 bg-success">
+                <div class="col-md-10">
                     <p>Nom: {{ form.name }}</p>
                     <p>Prénom: {{ form.firstName }}</p>
                     <p>Date de naissance: {{ form.birthDate|date('d-m-Y') }}</p>
@@ -29,13 +29,13 @@
                 entrée au musée ':'Non' }}</p>
                     <br/>
                 </div>
-                <div class="col-md-2 bg-warning">
+                <div class="col-md-2">
                     {{ form.realPrice }}€
                 </div>
             {% endfor %}
         </div>
-        <div class="row">
-            <div class="col-md-offset-10 col-md-2 bg-danger">
+        <div class="row well">
+            <div class="col-md-offset-10 col-md-2">
                 Total = {{ recap2.totalPrice }}€
             </div>
         </div>

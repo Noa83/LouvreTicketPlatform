@@ -4,6 +4,8 @@ services:
 
     louvre_ticketplatform.price_calculator:
         class: Louvre\TicketPlatformBundle\Services\PriceCalculator
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     louvre_ticketplatform.reservation_code:
         class: Louvre\TicketPlatformBundle\Services\ReservationCode
@@ -12,4 +14,7 @@ services:
         class: Louvre\TicketPlatformBundle\Services\ConfirmationMail
         arguments:
             - "@mailer"
-            - %locale%
+            - "@twig"
+
+    louvre_ticketplatform.stripe_payment:
+        class: Louvre\TicketPlatformBundle\Services\StripePay

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PaymentModel
 {
-   private $customerId;
+
    private $token;
    private $reservationCode;
 
@@ -47,20 +47,6 @@ class PaymentModel
         $this->token = $token;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCustomerId()
-    {
-        return $this->customerId;
-    }
 
-    /**
-     * @param mixed $customerId
-     */
-    public function setCustomerId($customerId)
-    {
-        $this->customerId = $customerId;
-    }
 
 }

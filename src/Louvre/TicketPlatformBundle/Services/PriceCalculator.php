@@ -8,7 +8,14 @@ use Louvre\TicketPlatformBundle\Entity\Price;
 class PriceCalculator
 {
 
-    public function getPriceCalc($birthDate, $reducedPrice, $ticketType, $manager)
+    private $manager;
+
+    public function __construct($manager)
+    {
+        $this->manager = $manager;
+    }
+
+    public function getPriceCalc($birthDate, $reducedPrice, $ticketType)
     {
 
         //Calcul de l'age
@@ -28,7 +35,7 @@ class PriceCalculator
 
 
         //Calcul du prix
-        $priceRepository = $manager->getRepository('LouvreTicketPlatformBundle:Price');
+        $priceRepository = $this->manager->getRepository('LouvreTicketPlatformBundle:Price');
 
         if ($reducedPrice) {
             /** @var Price $halfPrice */

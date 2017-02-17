@@ -9,14 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 class ConfirmationMail
 {
+    /**
+     * @var \Swift_Mailer
+     */
     private $mailer;
-    private $locale;
+    /**
+     * @var \Twig_Environment
+     */
+    private $twig;
 
-    public function __construct(\Swift_Mailer $mailer, $locale )
+
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig )
     {
         $this->mailer = $mailer;
-        $this->locale = $locale;
-
+        $this->twig = $twig;
     }
 
     public function generateMail($email, $visitDate, $recapTickets2, $reservationCode)
@@ -26,8 +32,8 @@ class ConfirmationMail
             ->setFrom('postmaster@maleyrie.fr')
             ->setTo($email)
             ->setBody(
-                $this->renderView(
-                    'Emails/ConfirmationMail.html.twig', [
+                $this->twig->render(
+                    'LouvreTicketPlatformBundle:Emails:ConfirmationMail.html.twig', [
                         'recap2' => $recapTickets2,
                         'visitDate' => $visitDate,
                         'resCode' => $reservationCode
@@ -37,9 +43,8 @@ class ConfirmationMail
             )
 
         ;
-        $this->get('mailer')->send($message);
+        $this->mailer->send($message);
 
-        return $this->render('Ticket/Step4.html.twig');
     }
 
 

@@ -5,11 +5,12 @@ namespace Louvre\TicketPlatformBundle\Services;
 use Stripe\Stripe;
 use Stripe\Charge;
 
+
 class StripePay extends Stripe
 {
-    public function __construct()
+    public function __construct($stripeApiKey)
     {
-        self::setApiKey('sk_test_Lv5I6Urhq0UOhJwDurhD1cna');
+        self::setApiKey($stripeApiKey);
 
         return $this;
     }

@@ -53,7 +53,6 @@ class TicketController extends Controller
             }
         }
 
-        //Affichage du formulaire via méthode createView()
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep1
             ->createView(),]);
 
@@ -64,8 +63,6 @@ class TicketController extends Controller
     {
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         dump($recapTickets1);
-        //Récupération du nombre de tickets saisi à l'étape 1
-       // $nbTickets = $request->getSession()->get('formModelStep1')->getNumberOfTickets();
         $nbTickets = $recapTickets1->getNumberOfTickets();
         dump($nbTickets);
         $ownerStep2 = new OwnerStep2($nbTickets);
@@ -77,8 +74,6 @@ class TicketController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
 
-                //appel du service price
-                //Parcours du array de données récupérées et usage du service
                 $totalPrice = 0;
                 foreach ($ownerStep2->getForm2() as $form) {
 
@@ -87,8 +82,7 @@ class TicketController extends Controller
                     //Calcul du prix de chaque ticket a l'aide du service
                     $finalPrice = $priceService->getPriceCalc($form->getBirthDate(),
                         $form->getReducedPrice(),
-                        $recapTickets1->getTicketType(),
-                        $this->getDoctrine()->getManager());
+                        $recapTickets1->getTicketType());
 
                     $form->setRealPrice($finalPrice);
 
@@ -116,35 +110,32 @@ class TicketController extends Controller
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
 
-        $stripeClient = $this->get('flosch.stripe.client');
+        $stripeClient = $this->get('louvre_ticketplatform.stripe_payment');
         $token = $request->get('stripeToken');
 
-        $newCustomer = 0;
+
         $errorMessage = 0;
         if ($token != NULL) {
 
-            $newCustomer = $stripeClient->createCustomer($token, $request->get('cardName'));
-            dump($newCustomer);
-            $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
-            $amount = $recapTickets2->getTotalPrice().'00';
-            $reservationCode = $randomSuite->generateRandomSuite();
-            $chargeCard = $stripeClient->createCharge($amount, $chargeCurrency = 'EUR',
-                $newCustomer, $reservationCode);
+            $amount = $recapTickets2->getTotalPrice() . '00';
+            $chargeCard = $stripeClient->createCharge($amount, 'EUR',
+                $token);
             dump($chargeCard);
             dump($chargeCard->status);
 
-            if ($chargeCard->status == 'succeeded'){
+            if ($chargeCard->status == 'succeeded') {
 
-            $paymentInfo = new PaymentModel();
-            $paymentInfo->setCustomerId($newCustomer->id);
-            $paymentInfo->setToken($token);
-            $paymentInfo->setReservationCode($reservationCode);
-            $session = $request->getSession();
-            $session->set('paymentInfo', $paymentInfo);
-            dump($paymentInfo);
+                $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
+                $reservationCode = $randomSuite->generateRandomSuite();
 
+                $paymentInfo = new PaymentModel();
+                $paymentInfo->setToken($token);
+                $paymentInfo->setReservationCode($reservationCode);
+                $session = $request->getSession();
+                $session->set('paymentInfo', $paymentInfo);
+                dump($paymentInfo);
 
-            return $this->redirectToRoute('louvre_ticket_step_4');
+                return $this->redirectToRoute('louvre_ticket_step_4');
             } else {
 
                 $errorMessage = 'erreur';
