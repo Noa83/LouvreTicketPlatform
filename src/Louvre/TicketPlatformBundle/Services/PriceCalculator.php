@@ -24,9 +24,7 @@ class PriceCalculator
                 $years--;
             }
         };
-
         $age = $years;
-        dump($age);
 
 
         //Calcul du prix

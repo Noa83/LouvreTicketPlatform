@@ -1,13 +1,50 @@
-{%  extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+{% extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+
 
 {% block title %}
-    Etape 1 - Choix du Billet - {{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block louvreticket_body %}
 
-    <div class="well">
-        {{ form(formView) }}
-    </div>
 
+
+
+
+
+
+    <div class="well">
+        {{ form_start(formView, {'attr': {'class': 'form-horizontal'}}) }}
+
+        <div class="form-group">
+            {# Génération du label. #}
+            {{ form_label(formView.visitDate, "Date de la visite", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+
+            {# Affichage des erreurs pour ce champ précis. #}
+            {{ form_errors(formView.visitDate) }}
+
+            <div class="col-sm-10">
+                {# Génération de l'input. #}
+                {{ form_widget(formView.visitDate, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
+        {{ form_widget(formView.validation, {'attr': {'class': 'btn btn-primary'}}) }}
+
+        {# Génération automatique des champs pas encore écrits.
+           Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
+           et tous les champs cachés (type « hidden »). #}
+        {{ form_rest(formView) }}
+
+        {# Fermeture de la balise <form> du formulaire HTML #}
+        {{ form_end(formView) }}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('js/datePicker.js') }}"></script>
 {% endblock %}

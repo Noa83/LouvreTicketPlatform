@@ -7,3 +7,9 @@ services:
 
     louvre_ticketplatform.reservation_code:
         class: Louvre\TicketPlatformBundle\Services\ReservationCode
+
+    louvre_ticketplatform.confirmation_mail:
+        class: Louvre\TicketPlatformBundle\Services\ConfirmationMail
+        arguments:
+            - "@mailer"
+            - %locale%

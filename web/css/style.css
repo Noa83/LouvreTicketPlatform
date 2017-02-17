@@ -1,3 +1,12 @@
-body {
-    background-color: lightslategrey;
+header {
+    background-color: #010101;
+}
+
+.row {
+    margin-left: -30px;
+}
+
+#mailTitle {
+    color: white;
+    width: 480px;
 }

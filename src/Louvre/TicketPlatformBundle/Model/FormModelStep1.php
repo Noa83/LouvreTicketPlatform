@@ -20,16 +20,10 @@ class FormModelStep1
     private $email;
 
 
-    public function __construct()
-    {
-        $this->visitDate = new \DateTime();
-    }
-
-
     /**
      * Set visitDate
      *
-    @param \DateTime $visitDate
+    @param string $visitDate
      *
      * @return FormModelStep1
      */
@@ -43,7 +37,7 @@ class FormModelStep1
     /**
      * Get visitDate
      *
-     * @return \DateTime
+     * @return string
      */
     public function getVisitDate()
     {

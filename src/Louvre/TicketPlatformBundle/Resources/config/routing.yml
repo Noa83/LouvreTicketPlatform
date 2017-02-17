@@ -28,11 +28,6 @@ louvre_ticket_step_5:
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step5
 
-louvre_ticket_step_6:
-    path:    /step-6-back_to_louvre_homepage
-    defaults:
-        _controller: LouvreTicketPlatformBundle:Ticket:step6
-
 louvre_ticket_cgv:
     path:    /cgv
     defaults:
@@ -42,6 +37,11 @@ louvre_ticket_tarifs:
     path:    /tarifs
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:tarifs
+
+louvre_ticket_mail:
+    path:    /mail
+    defaults:
+        _controller: LouvreTicketPlatformBundle:Ticket:mail
 
 
 
