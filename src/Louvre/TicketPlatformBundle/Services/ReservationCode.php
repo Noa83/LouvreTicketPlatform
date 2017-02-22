@@ -13,7 +13,7 @@ class ReservationCode
         $characts .= '1234567890';
         $randomSuite = '';
 
-        for($i=0;$i < 15;$i++)
+        for($i=0; $i < 15; $i++)
         {
             $randomSuite .= $characts[ rand() % strlen($characts) ];
         }

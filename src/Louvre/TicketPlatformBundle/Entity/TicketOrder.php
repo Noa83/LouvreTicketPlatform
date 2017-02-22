@@ -3,6 +3,7 @@
 namespace Louvre\TicketPlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * TicketOrder
@@ -12,6 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TicketOrder
 {
+    /**
+     * @ORM\OneToMany(targetEntity="Louvre\TicketPlatformBundle\Entity\Ticket", mappedBy = "tickerOrder", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tickets;
+
+
     /**
      * @var int
      *
@@ -35,12 +43,6 @@ class TicketOrder
      */
     private $email;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="paid", type="boolean")
-     */
-    private $paid;
 
 
     /**
@@ -100,29 +102,45 @@ class TicketOrder
     {
         return $this->email;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Set paid
+     * Add ticket
      *
-     * @param boolean $paid
+     * @param \Louvre\TicketPlatformBundle\Entity\Ticket $ticket
      *
      * @return TicketOrder
      */
-    public function setPaid($paid)
+    public function addTicket(\Louvre\TicketPlatformBundle\Entity\Ticket $ticket)
     {
-        $this->paid = $paid;
+        $this->tickets[] = $ticket;
 
         return $this;
     }
 
     /**
-     * Get paid
+     * Remove ticket
      *
-     * @return bool
+     * @param \Louvre\TicketPlatformBundle\Entity\Ticket $ticket
      */
-    public function getPaid()
+    public function removeTicket(\Louvre\TicketPlatformBundle\Entity\Ticket $ticket)
     {
-        return $this->paid;
+        $this->tickets->removeElement($ticket);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }
-

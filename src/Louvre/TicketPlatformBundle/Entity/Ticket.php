@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Ticket
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Louvre\TicketPlatformBundle\Entity\TicketOrder", inversedBy="tickets")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ticketOrder;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -20,6 +26,7 @@ class Ticket
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
 
     /**
      * @var \DateTime
@@ -45,177 +52,106 @@ class Ticket
     /**
      * @var int
      *
-     * @ORM\Column(name="idTarif", type="integer")
+     * @ORM\Column(name="price", type="integer")
      */
-    private $idTarif;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idType", type="integer")
-     */
-    private $idType;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="bookingCode", type="string", length=255)
-     */
-    private $idBookingCode;
+    private $price;
 
 
     /**
-     * Get id
-     *
+     * @return mixed
+     */
+    public function getTicketOrder()
+    {
+        return $this->ticketOrder;
+    }
+
+    /**
+     * @param mixed $ticketOrder
+     */
+    public function setTicketOrder($ticketOrder)
+    {
+        $this->ticketOrder = $ticketOrder;
+    }
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * Set visitDate
-     *
-    @param \DateTime $visitDate
-     *
-     * @return Ticket
+     * @param int $id
      */
-    public function setVisitDate($visitDate)
+    public function setId(int $id)
     {
-        $this->visitDate = $visitDate;
-
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get visitDate
-     *
      * @return \DateTime
      */
-    public function getVisitDate()
+    public function getVisitDate(): \DateTime
     {
         return $this->visitDate;
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Ticket
+     * @param \DateTime $visitDate
      */
-    public function setName($name)
+    public function setVisitDate(\DateTime $visitDate)
     {
-        $this->name = $name;
-
-        return $this;
+        $this->visitDate = $visitDate;
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return Ticket
+     * @param string $name
      */
-    public function setFirstName($firstName)
+    public function setName(string $name)
     {
-        $this->firstName = $firstName;
-
-        return $this;
+        $this->name = $name;
     }
 
     /**
-     * Get firstName
-     *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
     /**
-     * Set idTarif
-     *
-     * @param integer $idTarif
-     *
-     * @return Ticket
+     * @param string $firstName
      */
-    public function setIdTarif($idTarif)
+    public function setFirstName(string $firstName)
     {
-        $this->idTarif = $idTarif;
-
-        return $this;
+        $this->firstName = $firstName;
     }
 
     /**
-     * Get idTarif
-     *
      * @return int
      */
-    public function getIdTarif()
+    public function getPrice(): int
     {
-        return $this->idTarif;
+        return $this->price;
     }
 
     /**
-     * Set idType
-     *
-     * @param integer $idType
-     *
-     * @return Ticket
+     * @param int $price
      */
-    public function setIdType($idType)
+    public function setPrice(int $price)
     {
-        $this->idType = $idType;
-
-        return $this;
+        $this->price = $price;
     }
 
-    /**
-     * Get idType
-     *
-     * @return int
-     */
-    public function getIdType()
-    {
-        return $this->idType;
-    }
-
-    /**
-     * Set idBookingCode
-     *
-     * @param string $idBookingCode
-     *
-     * @return Ticket
-     */
-    public function setIdBookingCode($idBookingCode)
-    {
-        $this->idBookingCode = $idBookingCode;
-
-        return $this;
-    }
-
-    /**
-     * Get idBookingCode
-     *
-     * @return string
-     */
-    public function getIdBookingCode()
-    {
-        return $this->idBookingCode;
-    }
 }
 

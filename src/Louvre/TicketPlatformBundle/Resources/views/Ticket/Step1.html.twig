@@ -17,28 +17,53 @@
         {{ form_start(formView, {'attr': {'class': 'form-horizontal'}}) }}
 
         <div class="form-group">
-            {# Génération du label. #}
-            {{ form_label(formView.visitDate, "Date de la visite", {'label_attr': {'class': 'col-md-2 control-label'}}) }}
+            {{ form_label(formView.visitDate, "Date de la visite", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
-            {# Affichage des erreurs pour ce champ précis. #}
             {{ form_errors(formView.visitDate) }}
 
-            <div class="col-sm-10">
-                {# Génération de l'input. #}
-                {{ form_widget(formView.visitDate, {'attr': {'class': 'form-control'}}) }}
+            <div class="col-sm-6">
+                {{ form_widget(formView.visitDate, {'attr': {'class': 'form-control', 'readonly':'true'}}) }}
             </div>
         </div>
 
-        {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
-        {{ form_widget(formView.validation, {'attr': {'class': 'btn btn-primary'}}) }}
+        <div class="form-group">
+            {{ form_label(formView.ticketType, "Type de Billet", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
-        {# Génération automatique des champs pas encore écrits.
-           Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-           et tous les champs cachés (type « hidden »). #}
-        {{ form_rest(formView) }}
+            {{ form_errors(formView.ticketType) }}
 
-        {# Fermeture de la balise <form> du formulaire HTML #}
+            <div class="col-sm-6">
+                {{ form_widget(formView.ticketType, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formView.numberOfTickets, "Nombre de Billets souhaités", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+
+            {{ form_errors(formView.numberOfTickets) }}
+
+            <div class="col-sm-6">
+                {{ form_widget(formView.numberOfTickets, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formView.email, "Votre Email", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+
+            {{ form_errors(formView.email) }}
+
+            <div class="col-sm-6">
+                {{ form_widget(formView.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+
+
         {{ form_end(formView) }}
+
+        <div class="col-sm-6">
+            {{ form_widget(formView.validation, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+
 
     </div>
 {% endblock %}

@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 
+
 class TicketController extends Controller
 {
     public function step1Action(Request $request)
@@ -114,7 +115,6 @@ class TicketController extends Controller
         $token = $request->get('stripeToken');
 
 
-        $errorMessage = 0;
         if ($token != NULL) {
 
             $amount = $recapTickets2->getTotalPrice() . '00';
@@ -123,8 +123,33 @@ class TicketController extends Controller
             dump($chargeCard);
             dump($chargeCard->status);
 
-            if ($chargeCard->status == 'succeeded') {
+//            if ($chargeCard->status == 'succeded') {
+//
+//                $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
+//                $reservationCode = $randomSuite->generateRandomSuite();
+//
+//                $paymentInfo = new PaymentModel();
+//                $paymentInfo->setToken($token);
+//                $paymentInfo->setReservationCode($reservationCode);
+//                $session = $request->getSession();
+//                $session->set('paymentInfo', $paymentInfo);
+//                dump($paymentInfo);
+//
+//                return $this->redirectToRoute('louvre_ticket_step_4');
+//
+//            } else {
+//                dump($chargeCard->status);
+//                $errorMessage = 'erreur';
+//                return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
+//                    'recap1' => $recapTickets1,
+//                    'recap2' => $recapTickets2,
+//                    'errorMessage' => $errorMessage
+//                ]);
+//            }
 
+
+
+            try{
                 $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
                 $reservationCode = $randomSuite->generateRandomSuite();
 
@@ -136,9 +161,10 @@ class TicketController extends Controller
                 dump($paymentInfo);
 
                 return $this->redirectToRoute('louvre_ticket_step_4');
-            } else {
 
-                $errorMessage = 'erreur';
+            } catch(\Stripe\Error\Card $e) {
+                error_log($e->getMessage());
+                $errorMessage = 'Erreur de carte';
                 return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
                     'recap1' => $recapTickets1,
                     'recap2' => $recapTickets2,
@@ -166,25 +192,12 @@ class TicketController extends Controller
             $confirmationMail = $this->get('louvre_ticketplatform.confirmation_mail');
             $mail = $confirmationMail->generateMail($recapTickets1->getEmail(), $recapTickets1->getVisitDate(),
                 $recapTickets2, $recapPayment->getReservationCode());
-//            $message = \Swift_Message::newInstance()
-//                ->setSubject('Confirmation de votre achat de billets')
-//                ->setFrom('postmaster@maleyrie.fr')
-//                ->setTo($recapTickets1->getEmail())
-//                ->setBody(
-//                    $this->renderView(
-//                        'LouvreTicketPlatformBundle:Emails:ConfirmationMail.html.twig', [
-//                            'recap2' => $recapTickets2,
-//                            'visitDate' => $recapTickets1->getVisitDate()->format('Y-m-d'),
-//                            'resCode' => $recapPayment->getReservationCode()
-//                        ]
-//                    ),
-//                    'text/html'
-//                )
-//
-//            ;
-//            $this->get('mailer')->send($message);
-//
-//            //return $this->render(...);
+            dump($mail);
+
+            $bddRecordingService = $this->get('louvre_ticketplatform.formtoentity');
+            $bddRecording = $bddRecordingService->bddRecording($recapTickets1, $recapTickets2, $recapPayment);
+            dump($bddRecording);
+
         }
 
 
@@ -195,26 +208,6 @@ class TicketController extends Controller
         return new Response($content);
     }
 
-    public function step5Action()
-    {
-
-        //persistance en bdd de chaque instance à l'etape 5 (boucle à creer pour les nombres de tickets)
-//                $ticket = new Ticket();
-//                $ticket->setFirstName($formModel->getFirstName());
-//                $em = $this->getDoctrine()->getManager();
-//                $em->persist($ticket);
-//                $em->flush();
-
-
-//                //Récuperation du service
-//                $formToEntity = $this->container->get('louvre_ticketplatform.formtoentityinjection');
-//                //Execution du service
-//                $formToEntity->injectionStep1(formStep1);
-
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step5.html.twig');
-
-        return new Response($content);
-    }
 
     public function cgvAction()
     {

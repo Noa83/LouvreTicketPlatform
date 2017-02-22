@@ -1,6 +1,8 @@
 services:
-    louvre_ticketplatform.formtoentityinjection:
+    louvre_ticketplatform.formtoentity:
         class: Louvre\TicketPlatformBundle\Services\FormToEntity
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     louvre_ticketplatform.price_calculator:
         class: Louvre\TicketPlatformBundle\Services\PriceCalculator

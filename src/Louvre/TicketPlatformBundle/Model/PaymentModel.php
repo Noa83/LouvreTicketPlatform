@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PaymentModel
 {
-
    private $token;
    private $reservationCode;
 

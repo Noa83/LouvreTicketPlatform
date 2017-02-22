@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset=""utf-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}Billetterie du Musée du Louvre{% endblock %}</title>
@@ -15,16 +15,17 @@
         {% endblock %}
     </head>
 
-    <body>
+    <body id="body-content">
     <div class="container">
         <div id="header">
             <h1>Billetterie en Ligne</h1>
             <p>du Musée du Louvre</p>
         </div>
+        <hr class="border">
 
         <div id="blank_bar" class="row">
-            barre intermediaire
         </div>
+        <hr class="border">
 
         <div class="row">
             <div id="menu" class="col-md-3">
@@ -41,11 +42,9 @@
                     <li>
                         <a href="{{ path('louvre_ticket_step_4') }}">4 - Confirmation de paiement - Email</a>
                     </li>
+                    <li></li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_5') }}">5 - Confirmation</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-warning btn-lg" href="http://www.louvre.fr">Retour au site du Musée</a>
+                        <a id="back-button"class="btn btn-primary btn-lg" href="http://www.louvre.fr">Retour au site du Musée</a>
                     </li>
                 </ul>
             </div>
@@ -55,13 +54,13 @@
             </div>
         </div>
 
-        <hr>
+        <hr class="border">
 
         <footer class="row">
-            <div class="col-md-6" id="cgv">
+            <div class="col-md-offset-4 col-md-4" id="cgv">
                 <a href="{{ path('louvre_ticket_cgv') }}">CGV</a>
             </div>
-            <div class="col-md-6" id="tarifs">
+            <div class="col-md-4" id="tarifs">
                 <a href="{{  path('louvre_ticket_tarifs') }}">Tarifs</a>
             </div>
         </footer>

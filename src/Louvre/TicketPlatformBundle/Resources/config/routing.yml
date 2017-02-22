@@ -23,11 +23,6 @@ louvre_ticket_step_4:
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step4
 
-louvre_ticket_step_5:
-    path:    /step-5-confirmation
-    defaults:
-        _controller: LouvreTicketPlatformBundle:Ticket:step5
-
 louvre_ticket_cgv:
     path:    /cgv
     defaults:
