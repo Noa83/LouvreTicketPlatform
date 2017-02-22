@@ -163,8 +163,7 @@ class TicketController extends Controller
                 return $this->redirectToRoute('louvre_ticket_step_4');
 
             } catch(\Stripe\Error\Card $e) {
-                error_log($e->getMessage());
-                $errorMessage = 'Erreur de carte';
+                $errorMessage = $e->getMessage();
                 return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
                     'recap1' => $recapTickets1,
                     'recap2' => $recapTickets2,
