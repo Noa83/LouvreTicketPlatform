@@ -2,6 +2,7 @@
 
 namespace Louvre\TicketPlatformBundle\Repository;
 
+
 /**
  * TicketRepository
  *
@@ -10,4 +11,15 @@ namespace Louvre\TicketPlatformBundle\Repository;
  */
 class TicketRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function ticketsCount($visitDate)
+    {
+        return $this->_em->createQueryBuilder('t')
+            ->select('COUNT (0)')
+            ->from('LouvreTicketPlatformBundle:Ticket', 't')
+            ->where('DATE_DIFF(t.visitDate, :visitDate) = 0')
+            ->setParameter('visitDate', $visitDate)
+            ->getQuery()
+            ->getSingleScalarResult();
+        ;
+    }
 }

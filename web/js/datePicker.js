@@ -1,7 +1,8 @@
 
-    $( "#form_visitDate" ).datepicker({
+    $( "#form_step1_visitDate" ).datepicker({
         minDate: 0,
         maxDate: "+1Y",
+        dateFormat:"dd/mm/yy",
         beforeShowDay: function(date) {
             var utcDay = date.getUTCDay();
             var day = date.getDate();
@@ -9,6 +10,7 @@
             var premierMai = day === 1 && month === 4;
             var premierNov = day === 1 && month === 10;
             var noel = day === 25 && month === 11;
+
 
             var disableddates = ["27-03-2017"];
             var dateFormatted = jQuery.datepicker.formatDate('dd-mm-yy', date);

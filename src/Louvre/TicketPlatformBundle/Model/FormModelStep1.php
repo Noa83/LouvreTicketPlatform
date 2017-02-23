@@ -3,7 +3,7 @@
 namespace Louvre\TicketPlatformBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
+
 
 /**
  * FormModelStep1
@@ -51,9 +51,8 @@ class FormModelStep1
      */
     public function getFormatedVisitDate()
     {
-        $format = 'Y-m-d';
-        $date = \DateTime::createFromFormat($format, $this->visitDate);
-        return new \DateTime($date);
+        $format = 'd/m/Y';
+        return \DateTime::createFromFormat($format, $this->visitDate);
     }
 
     /**

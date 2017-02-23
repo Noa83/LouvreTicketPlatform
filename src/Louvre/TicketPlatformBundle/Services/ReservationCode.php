@@ -6,6 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 class ReservationCode
 {
+    private $manager;
+
+    public function __construct($manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function generateRandomSuite()
     {
         $characts = 'abcdefghijklmnopqrstuvwxyz';
@@ -13,11 +20,22 @@ class ReservationCode
         $characts .= '1234567890';
         $randomSuite = '';
 
-        for($i=0; $i < 15; $i++)
-        {
-            $randomSuite .= $characts[ rand() % strlen($characts) ];
-        }
+        $ticketOrderRepository = $this->manager->getRepository('LouvreTicketPlatformBundle:TicketOrder');
 
+        $randomSuite;
+        while ($randomSuite == NULL) {
+            for ($i = 0; $i < 15; $i++) {
+                $randomSuite .= $characts[rand() % strlen($characts)];
+            }
+
+            $code = $ticketOrderRepository->getRepoBookingCode($randomSuite);
+
+            if ($code != $randomSuite){
+                return $randomSuite;
+            }else{
+                return $randomSuite = null;
+            }
+        }
         return $randomSuite;
     }
 }

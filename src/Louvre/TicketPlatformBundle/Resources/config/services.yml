@@ -11,6 +11,8 @@ services:
 
     louvre_ticketplatform.reservation_code:
         class: Louvre\TicketPlatformBundle\Services\ReservationCode
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     louvre_ticketplatform.confirmation_mail:
         class: Louvre\TicketPlatformBundle\Services\ConfirmationMail

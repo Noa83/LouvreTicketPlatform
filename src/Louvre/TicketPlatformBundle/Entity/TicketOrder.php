@@ -3,7 +3,7 @@
 namespace Louvre\TicketPlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * TicketOrder
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class TicketOrder
 {
     /**
-     * @ORM\OneToMany(targetEntity="Louvre\TicketPlatformBundle\Entity\Ticket", mappedBy = "tickerOrder", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Louvre\TicketPlatformBundle\Entity\Ticket", mappedBy = "ticketOrder", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $tickets;

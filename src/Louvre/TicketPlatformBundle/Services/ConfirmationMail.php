@@ -41,6 +41,7 @@ class ConfirmationMail
                 ),
                 'text/html'
             )
+            //->attach(\Swift_Attachment::fromPath('web/images/Louvre-logo.jpg'));
 
         ;
         $this->mailer->send($message);

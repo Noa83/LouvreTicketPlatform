@@ -10,4 +10,13 @@ namespace Louvre\TicketPlatformBundle\Repository;
  */
 class TicketOrderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getRepoBookingCode($randomCode){
+        $repoBookCode = $this->_em
+            ->getRepository('LouvreTicketPlatformBundle:TicketOrder')
+            ->findOneBy(
+                array('bookingCode' => $randomCode)
+            )
+        ;
+        return $repoBookCode;
+    }
 }

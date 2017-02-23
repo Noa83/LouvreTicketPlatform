@@ -24,25 +24,13 @@ class StripePay extends Stripe
      */
     public function createCharge($chargeAmount, $chargeCurrency, $token)
     {
-        //ErrorHandler::register();
-        //try {
             $chargeOptions = [
                 'amount' => $chargeAmount,
                 'currency' => $chargeCurrency,
                 'source' => $token,
             ];
-        //}catch(\Stripe\Error\Card $e) {
-//            $handler = new ErrorHandler();
-//            $handler->handle( $e );
-//            $errorMessage = 'Erreur de carte';
-//            return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
-//                'recap1' => $recapTickets1,
-//                'recap2' => $recapTickets2,
-//                'errorMessage' => $errorMessage
-//            ]);
-//        }
-        return Charge::create($chargeOptions);
 
+        return Charge::create($chargeOptions);
     }
 
 }

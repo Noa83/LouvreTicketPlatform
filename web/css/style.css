@@ -1,10 +1,19 @@
-body#body-content{
+body#body-content, div.form-group{
     background-color: #010101;
     font-family: Georgia,"Times New Roman",Times,serif;
+    color: white;
 }
 
+
 div#header{
+    margin-top: 20px;
     color: white;
+}
+
+div.formstyle{
+    background-color: #010101;
+    margin-top: 30px;
+
 }
 
 hr.border{

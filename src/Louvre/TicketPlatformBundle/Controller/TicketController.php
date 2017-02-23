@@ -8,13 +8,9 @@ use Louvre\TicketPlatformBundle\Model\PaymentModel;
 use Louvre\TicketPlatformBundle\Type\OwnerStep2Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Louvre\TicketPlatformBundle\Type\FormStep1Type;
+
 
 
 
@@ -23,29 +19,18 @@ class TicketController extends Controller
 {
     public function step1Action(Request $request)
     {
-
-        //Création d'un objet FormModelStep1
+        //Creation du formulaire
         $formModelStep1 = new FormModelStep1();
+        $formStep1 = $this->get('form.factory')->create(FormStep1Type::class, $formModelStep1);
 
-        //Creation du formulaire  quand tout sera ok il faudra sortir le formulaire du controlleur
-        $formStep1 = $this->get('form.factory')->createBuilder(FormType::class, $formModelStep1)
-            ->add('visitDate', TextType::class)
-            ->add('ticketType', ChoiceType::class, array(
-                'choices' => array(
-                    'Billet Journée' => 'Billet Journée',
-                    'Billet Demie-journée' => 'Billet Demie-journée',
-                )
-            ))
-            ->add('numberOfTickets', NumberType::class)
-            ->add('email', EmailType::class)
-            ->add('validation', SubmitType::class)
-            ->getForm();
-
-
-        //Requete
         if ($request->isMethod('POST')) {
             $formStep1->handleRequest($request);
             if ($formStep1->isValid()) {
+                $visitDate = $formModelStep1->getFormatedVisitDate();
+                $em = $this->getDoctrine()->getManager();
+                $ticketRepo = $em->getRepository('LouvreTicketPlatformBundle:Ticket');
+                $nb = $ticketRepo->ticketsCount($visitDate);
+                dump($nb);
 
                 $session = $request->getSession();
 
@@ -56,21 +41,17 @@ class TicketController extends Controller
 
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep1
             ->createView(),]);
-
-
     }
 
     public function step2Action(Request $request)
     {
         $recapTickets1 = $request->getSession()->get('formModelStep1');
-        dump($recapTickets1);
         $nbTickets = $recapTickets1->getNumberOfTickets();
-        dump($nbTickets);
+
         $ownerStep2 = new OwnerStep2($nbTickets);
         $form = $this->get('form.factory')->create(OwnerStep2Type::class, $ownerStep2);
 
 
-        //Requete
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -78,7 +59,6 @@ class TicketController extends Controller
                 $totalPrice = 0;
                 foreach ($ownerStep2->getForm2() as $form) {
 
-                    //Récupération du service de calcul de prix
                     $priceService = $this->get('louvre_ticketplatform.price_calculator');
                     //Calcul du prix de chaque ticket a l'aide du service
                     $finalPrice = $priceService->getPriceCalc($form->getBirthDate(),
@@ -92,9 +72,8 @@ class TicketController extends Controller
                 }
                 $ownerStep2->setTotalPrice($totalPrice);
 
-                //Mise en session des infos
-                $session = $request->getSession();
 
+                $session = $request->getSession();
                 $session->set('ownerStep2', $ownerStep2);
 
                 return $this->redirectToRoute('louvre_ticket_step_3');
@@ -117,39 +96,13 @@ class TicketController extends Controller
 
         if ($token != NULL) {
 
+            try{
             $amount = $recapTickets2->getTotalPrice() . '00';
             $chargeCard = $stripeClient->createCharge($amount, 'EUR',
                 $token);
             dump($chargeCard);
             dump($chargeCard->status);
 
-//            if ($chargeCard->status == 'succeded') {
-//
-//                $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
-//                $reservationCode = $randomSuite->generateRandomSuite();
-//
-//                $paymentInfo = new PaymentModel();
-//                $paymentInfo->setToken($token);
-//                $paymentInfo->setReservationCode($reservationCode);
-//                $session = $request->getSession();
-//                $session->set('paymentInfo', $paymentInfo);
-//                dump($paymentInfo);
-//
-//                return $this->redirectToRoute('louvre_ticket_step_4');
-//
-//            } else {
-//                dump($chargeCard->status);
-//                $errorMessage = 'erreur';
-//                return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
-//                    'recap1' => $recapTickets1,
-//                    'recap2' => $recapTickets2,
-//                    'errorMessage' => $errorMessage
-//                ]);
-//            }
-
-
-
-            try{
                 $randomSuite = $this->get('louvre_ticketplatform.reservation_code');
                 $reservationCode = $randomSuite->generateRandomSuite();
 
@@ -198,9 +151,6 @@ class TicketController extends Controller
             dump($bddRecording);
 
         }
-
-
-
 
         $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step4.html.twig');
 
