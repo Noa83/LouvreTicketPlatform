@@ -24,3 +24,10 @@ services:
         class: Louvre\TicketPlatformBundle\Services\StripePay
         arguments:
             - %stripe_api_key%
+
+    louvre_ticketplatform.limit_reached_validator:
+        class: Louvre\TicketPlatformBundle\Validator\Constraints\LimitReachedValidator
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - {name: validator.constraint_validator}

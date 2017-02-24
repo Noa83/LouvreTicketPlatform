@@ -32,6 +32,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="visitDate", type="datetime")
+     *
      */
     private $visitDate;
 

@@ -3,17 +3,20 @@
 namespace Louvre\TicketPlatformBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Louvre\TicketPlatformBundle\Validator\Constraints as LouvreAssert;
 
 
 /**
  * FormModelStep1
  *
  * @ORM\MappedSuperClass
+ *
+ * @LouvreAssert\LimitReached
  */
 
 class FormModelStep1
 {
-
     private $visitDate;
     private $ticketType;
     private $numberOfTickets;

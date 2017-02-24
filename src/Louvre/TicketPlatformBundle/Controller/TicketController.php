@@ -26,11 +26,12 @@ class TicketController extends Controller
         if ($request->isMethod('POST')) {
             $formStep1->handleRequest($request);
             if ($formStep1->isValid()) {
-                $visitDate = $formModelStep1->getFormatedVisitDate();
-                $em = $this->getDoctrine()->getManager();
-                $ticketRepo = $em->getRepository('LouvreTicketPlatformBundle:Ticket');
-                $nb = $ticketRepo->ticketsCount($visitDate);
-                dump($nb);
+//                $visitDate = $formModelStep1->getFormatedVisitDate();
+//                $em = $this->getDoctrine()->getManager();
+//                $ticketRepo = $em->getRepository('LouvreTicketPlatformBundle:Ticket');
+//                $nbTicketsSold = $ticketRepo->ticketsCount($visitDate);
+//                dump($nbTicketsSold);
+
 
                 $session = $request->getSession();
 
