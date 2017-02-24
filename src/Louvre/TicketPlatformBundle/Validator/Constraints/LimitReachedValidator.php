@@ -31,6 +31,7 @@ class LimitReachedValidator extends ConstraintValidator
 
         if (($nbTicketsSold + $nbTicketsWished) <= 3 ) {
             $this->context->buildViolation($constraint->message)
+                ->atPath('value')
                 ->addViolation();
         }
     }

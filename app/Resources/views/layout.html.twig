@@ -19,12 +19,13 @@
     <div class="container">
         <div id="header" class="row">
             <div class="col-md-6">
-                <img src="{{ asset('images/Louvre-logo.jpg') }}" alt="logo louvre" class="img-responsive">
+                <img id="logo_entete" src="{{ asset('images/Louvre-logo.jpg') }}" alt="logo louvre" class="img-responsive">
             </div>
             <div class="col-md-6">
-                <br>
-                <h1>Billetterie en Ligne</h1>
-                <p>du Musée du Louvre</p>
+                <div id="titre" class="col-md-12">
+                    <h1>Billetterie en Ligne</h1>
+                    <h4>du Musée du Louvre</h4>
+                </div>
             </div>
         </div>
         <hr class="border">
@@ -37,20 +38,20 @@
             <div id="menu" class="col-md-3">
                 <ul class="nav nav-pills nav-stacked">
                     <li>
-                        <a href="{{ path('louvre_ticket_step_1') }}">1 - Choix du billet</a>
+                        <a class="navi" href="{{ path('louvre_ticket_step_1') }}">1 - Choix du billet</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_2') }}">2 - Saisie des informations</a>
+                        <a class="navi" href="{{ path('louvre_ticket_step_2') }}">2 - Saisie des informations</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_3') }}">3 - Récapitulatif - Paiement</a>
+                        <a class="navi" href="{{ path('louvre_ticket_step_3') }}">3 - Récapitulatif - Paiement</a>
                     </li>
                     <li>
-                        <a href="{{ path('louvre_ticket_step_4') }}">4 - Confirmation de paiement - Email</a>
+                        <a class="navi" href="{{ path('louvre_ticket_step_4') }}">4 - Confirmation de paiement - Email</a>
                     </li>
                     <li></li>
                     <li>
-                        <a id="back-button"class="btn btn-primary btn-lg" href="http://www.louvre.fr">Retour au site du Musée</a>
+                        <a id="back-button"class="btn btn-lg navi" href="http://www.louvre.fr">Retour au site du Musée</a>
                     </li>
                 </ul>
             </div>

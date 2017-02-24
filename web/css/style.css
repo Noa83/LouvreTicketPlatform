@@ -1,19 +1,42 @@
-body#body-content, div.form-group{
-    background-color: #010101;
+body#body-content, div.form-group, div.formstyle{
+    background-color: #222222 ;
     font-family: Georgia,"Times New Roman",Times,serif;
     color: white;
 }
 
-
-div#header{
-    margin-top: 20px;
+a.navi{
     color: white;
 }
 
-div.formstyle{
-    background-color: #010101;
-    margin-top: 30px;
+div#menu{
+    margin-top: 10px;
+}
 
+div#header{
+    margin-top: 20px;
+    border: 5px solid #010101;
+    border-radius: 25px;
+    background-color: #010101;
+}
+
+img#logo_entete{
+    margin-top: 8px;
+}
+
+div#titre>h1, div#titre>h4{
+    font-size: 55px;
+}
+
+div.formstyle{
+    margin-top: 30px;
+}
+
+a#back-button, div#blank_bar{
+    background-color: #C82D00;
+}
+
+div#blank_bar{
+    height: 30px;
 }
 
 hr.border{
