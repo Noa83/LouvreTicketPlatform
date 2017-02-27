@@ -2,9 +2,6 @@
 
 namespace Louvre\TicketPlatformBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
-
-
 
 /**
  * PriceRepository

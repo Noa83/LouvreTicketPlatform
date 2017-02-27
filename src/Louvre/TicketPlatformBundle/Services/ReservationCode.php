@@ -20,15 +20,13 @@ class ReservationCode
         $characts .= '1234567890';
         $randomSuite = '';
 
-        $ticketOrderRepository = $this->manager->getRepository('LouvreTicketPlatformBundle:TicketOrder');
-
-        $randomSuite;
         while ($randomSuite == NULL) {
             for ($i = 0; $i < 15; $i++) {
                 $randomSuite .= $characts[rand() % strlen($characts)];
             }
 
-            $code = $ticketOrderRepository->getRepoBookingCode($randomSuite);
+            $code = $this->manager->getRepository('LouvreTicketPlatformBundle:TicketOrder')
+                ->getRepoBookingCode($randomSuite);
 
             if ($code != $randomSuite){
                 return $randomSuite;

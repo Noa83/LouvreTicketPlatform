@@ -4,23 +4,33 @@ body#body-content, div.form-group, div.formstyle{
     color: white;
 }
 
-a.navi{
+a.navi, div#tarifs>a, div#cgv>a{
     color: white;
+}
+
+div#recap_order{
+    border: 1px solid #333;
+    border-radius: 25px;
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+div#recap_price, div#recap_infos, div#confirmation_text{
+    border: 1px solid #333;
+    border-radius: 25px;
+    padding: 10px 15px 15px 15px;
+}
+
+.checkbox label{
+    color: #222222;
 }
 
 div#menu{
     margin-top: 10px;
 }
 
-div#header{
-    margin-top: 20px;
-    border: 5px solid #010101;
-    border-radius: 25px;
-    background-color: #010101;
-}
-
 img#logo_entete{
-    margin-top: 8px;
+    margin-top: 15px;
 }
 
 div#titre>h1, div#titre>h4{
@@ -31,8 +41,9 @@ div.formstyle{
     margin-top: 30px;
 }
 
-a#back-button, div#blank_bar{
+a#back-button, div#blank_bar, input#validButton, button#pay_button{
     background-color: #C82D00;
+    color: white;;
 }
 
 div#blank_bar{

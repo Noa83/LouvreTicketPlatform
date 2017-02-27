@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FormStep1Type extends AbstractType
 {
@@ -24,9 +23,7 @@ class FormStep1Type extends AbstractType
                 )
             ))
             ->add('numberOfTickets', NumberType::class)
-            ->add('email', EmailType::class)
-            ->add('validation', SubmitType::class);
-
+            ->add('email', EmailType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

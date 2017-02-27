@@ -16,10 +16,8 @@ class OwnerStep2Type extends AbstractType
             ->add('form2', CollectionType::class, array(
                 'entry_type'   => FormStep2Type::class,
                 'allow_add'    => true
-            ))
-            ->add('validation',      SubmitType::class);
-        //bonne pratique: ajouter le validation dans le twig directement et l'enlever de la.
-
+            ));
+//            ->add('validation',      SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

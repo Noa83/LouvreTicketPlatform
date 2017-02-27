@@ -4,7 +4,7 @@ namespace Louvre\TicketPlatformBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class TicketControllerTest extends WebTestCase
 {
     public function testIndex()
     {

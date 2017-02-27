@@ -26,7 +26,7 @@ class FormModelStep1
     /**
      * Set visitDate
      *
-    @param string $visitDate
+     * @param string $visitDate
      *
      * @return FormModelStep1
      */

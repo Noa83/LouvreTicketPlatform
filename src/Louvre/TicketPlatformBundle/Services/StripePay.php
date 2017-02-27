@@ -4,7 +4,6 @@ namespace Louvre\TicketPlatformBundle\Services;
 
 use Stripe\Stripe;
 use Stripe\Charge;
-use Symfony\Component\Debug\ErrorHandler;
 
 
 class StripePay extends Stripe

@@ -27,11 +27,11 @@ class LimitReachedValidator extends ConstraintValidator
 
         $ticketRepo = $this->manager->getRepository('LouvreTicketPlatformBundle:Ticket');
         $nbTicketsSold = $ticketRepo->ticketsCount($date);
-        dump($nbTicketsSold);
 
-        if (($nbTicketsSold + $nbTicketsWished) <= 3 ) {
+        if (($nbTicketsSold + $nbTicketsWished) >= 1000 ) {
+
             $this->context->buildViolation($constraint->message)
-                ->atPath('value')
+                ->atPath('visitDate')
                 ->addViolation();
         }
     }

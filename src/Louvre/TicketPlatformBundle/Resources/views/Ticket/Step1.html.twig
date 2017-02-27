@@ -7,19 +7,17 @@
 
 {% block louvreticket_body %}
 
-
-
-
-
-
+    <h4> Etape 1 - Choix du billet</h4>
 
     <div class="formstyle">
         {{ form_start(formView, {'attr': {'class': 'form-horizontal'}}) }}
 
         <div class="form-group">
-            {{ form_label(formView.visitDate, "Date de la visite", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+            <div class="col-sm-offset-2 col-sm-10">
+                {{ form_errors(formView.visitDate) }}
+            </div>
 
-            {{ form_errors(formView.visitDate) }}
+            {{ form_label(formView.visitDate, "Date de la visite", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
             <div class="col-sm-6">
                 {{ form_widget(formView.visitDate, {'attr': {'class': 'form-control', 'readonly':'true'}}) }}
@@ -27,9 +25,11 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(formView.ticketType, "Type de Billet", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+            <div class="col-sm-offset-2 col-sm-10">
+                {{ form_errors(formView.ticketType) }}
+            </div>
 
-            {{ form_errors(formView.ticketType) }}
+            {{ form_label(formView.ticketType, "Type de Billet", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
             <div class="col-sm-6">
                 {{ form_widget(formView.ticketType, {'attr': {'class': 'form-control'}}) }}
@@ -37,9 +37,11 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(formView.numberOfTickets, "Nombre de Billets souhaités", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
+            <div class="col-sm-offset-2 col-sm-10">
+                {{ form_errors(formView.numberOfTickets) }}
+            </div>
 
-            {{ form_errors(formView.numberOfTickets) }}
+            {{ form_label(formView.numberOfTickets, "Nombre de Billets souhaités", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
 
             <div class="col-sm-6">
                 {{ form_widget(formView.numberOfTickets, {'attr': {'class': 'form-control'}}) }}
@@ -47,24 +49,21 @@
         </div>
 
         <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                {{ form_errors(formView.email) }}
+            </div>
             {{ form_label(formView.email, "Votre Email", {'label_attr': {'class': 'col-md-4 control-label'}}) }}
-
-            {{ form_errors(formView.email) }}
 
             <div class="col-sm-6">
                 {{ form_widget(formView.email, {'attr': {'class': 'form-control'}}) }}
             </div>
         </div>
 
-
-
-        {{ form_end(formView) }}
-
-        <div id="validButton" class="col-sm-6">
-            {{ form_widget(formView.validation, {'attr': {'class': 'btn btn-primary col-md-offset-6 col-md-2'}}) }}
+        <div class="col-sm-10">
+            <input id="validButton" type="submit" value="Validation" class="btn btn-default pull-right"/>
         </div>
 
-
+        {{ form_end(formView) }}
     </div>
 {% endblock %}
 

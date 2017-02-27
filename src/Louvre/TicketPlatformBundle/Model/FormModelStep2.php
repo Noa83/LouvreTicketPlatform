@@ -92,7 +92,7 @@ class FormModelStep2
     /**
      * Set birthDate
      *
-    @param \DateTime $birthDate
+     * @param \DateTime $birthDate
      *
      * @return FormModelStep2
      */

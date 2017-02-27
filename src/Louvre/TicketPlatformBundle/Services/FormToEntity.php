@@ -20,7 +20,6 @@ class FormToEntity
         $ticketOrder = new TicketOrder();
         $ticketOrder->setBookingCode($recapPayment->getReservationCode());
         $ticketOrder->setEmail($recapTickets1->getEmail());
-        dump($ticketOrder);
 
         foreach ($recapTickets2->getForm2()->toArray() as $form ){
             $ticket = new Ticket();
@@ -28,7 +27,6 @@ class FormToEntity
             $ticket->setFirstName($form->getFirstName());
             $ticket->setVisitDate($recapTickets1->getFormatedVisitDate());
             $ticket->setPrice($form->getRealPrice());
-            dump($ticket);
             $ticketOrder->addTicket($ticket);
             $ticket->setTicketOrder($ticketOrder);
         }
