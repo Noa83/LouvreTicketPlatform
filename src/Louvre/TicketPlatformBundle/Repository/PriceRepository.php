@@ -15,7 +15,6 @@ class PriceRepository extends \Doctrine\ORM\EntityRepository
                 array('reducedPrice' => true)
             )
         ;
-        dump($redPrice);
         return $redPrice;
     }
 
@@ -25,7 +24,6 @@ class PriceRepository extends \Doctrine\ORM\EntityRepository
             ->findBy(
                 array('reducedPrice' => false)
             );
-        dump($classicsPrices);
         return $classicsPrices;
     }
 

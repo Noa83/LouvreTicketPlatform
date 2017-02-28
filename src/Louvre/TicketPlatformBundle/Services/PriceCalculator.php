@@ -40,7 +40,7 @@ class PriceCalculator
         if ($reducedPrice) {
             /** @var Price $halfPrice */
             $halfPrice = $priceRepository->getReducedPrice();
-            return $goodPrice = $halfPrice->getPrice();
+            return $halfPrice->getPrice();
 
         } else {
 
@@ -53,9 +53,9 @@ class PriceCalculator
 
                     //Ajustement en fonction du type de billet
                     if ($ticketType == 'Billet Demie-journée') {
-                        return $finalPrice = $goodPrice / 2;
+                        return $goodPrice / 2;
                     } else {
-                        return $finalPrice = $goodPrice;
+                        return $goodPrice;
                     }
                 };
             };
