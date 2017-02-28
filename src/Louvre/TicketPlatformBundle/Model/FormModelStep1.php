@@ -13,6 +13,7 @@ use Louvre\TicketPlatformBundle\Validator\Constraints as LouvreAssert;
  * @ORM\MappedSuperClass
  *
  * @LouvreAssert\LimitReached
+ * @LouvreAssert\MaxHourExceeded
  */
 
 class FormModelStep1
@@ -57,6 +58,7 @@ class FormModelStep1
         $format = 'd/m/Y';
         return \DateTime::createFromFormat($format, $this->visitDate);
     }
+
 
     /**
      * Set ticketType

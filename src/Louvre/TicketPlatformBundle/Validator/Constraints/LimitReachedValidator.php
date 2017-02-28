@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 
-
 class LimitReachedValidator extends ConstraintValidator
 {
     private $manager;

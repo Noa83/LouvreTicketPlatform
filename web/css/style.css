@@ -1,4 +1,4 @@
-body#body-content, div.form-group, div.formstyle{
+div#container-content, div.form-group, div.formstyle{
     background-color: #222222 ;
     font-family: Georgia,"Times New Roman",Times,serif;
     color: white;
@@ -25,6 +25,10 @@ div#recap_price, div#recap_infos, div#confirmation_text{
     color: #222222;
 }
 
+span.color_icon_bar {
+    color:white;
+}
+
 div#menu{
     margin-top: 10px;
 }
@@ -44,6 +48,7 @@ div.formstyle{
 a#back-button, div#blank_bar, input#validButton, button#pay_button{
     background-color: #C82D00;
     color: white;;
+    font-size: 13px;
 }
 
 div#blank_bar{
@@ -66,4 +71,25 @@ a#back-button{
 #mailTitle {
     color: white;
     width: 480px;
+}
+
+/*Media Queries*/
+@media (min-width:1025px) {
+    div#media_menu_bar{
+        display:none;
+    }
+}
+
+@media (max-width: 1024px) {
+    div#titre>h1 {
+        font-size: 30px;
+    }
+
+    div#menu {
+        display: none;
+    }
+
+    div#media_menu_bar{
+        display: block;
+    }
 }

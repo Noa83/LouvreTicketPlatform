@@ -10,7 +10,7 @@
             var premierMai = day === 1 && month === 4;
             var premierNov = day === 1 && month === 10;
             var noel = day === 25 && month === 11;
-            var maxHourDay = date.getUTCHours();
+
 
 
 
