@@ -29,11 +29,13 @@ span.color_icon_bar {
     color:white;
 }
 
-div#menu{
+nav#menu{
     margin-top: 10px;
+    background-color: #222222;
+    border: none;
 }
 
-img#logo_entete{
+img#logo_entete, div#container-content{
     margin-top: 15px;
 }
 
@@ -45,20 +47,15 @@ div.formstyle{
     margin-top: 30px;
 }
 
-a#back-button, div#blank_bar, input#validButton, button#pay_button{
+a#back-button, input#validButton, button#pay_button, div#cgv_content{
     background-color: #C82D00;
     color: white;;
-    font-size: 13px;
-}
-
-div#blank_bar{
-    height: 30px;
+    font-size: 11px;
 }
 
 hr.border{
     border-top-color: #333;
 }
-
 
 a#back-button{
     margin-top: 50px;
@@ -68,28 +65,20 @@ a#back-button{
     margin-left: -30px;
 }
 
+div#footer {
+    margin-bottom: 15px;
+}
+
 #mailTitle {
     color: white;
     width: 480px;
 }
 
 /*Media Queries*/
-@media (min-width:1025px) {
-    div#media_menu_bar{
-        display:none;
-    }
-}
 
 @media (max-width: 1024px) {
     div#titre>h1 {
         font-size: 30px;
     }
 
-    div#menu {
-        display: none;
-    }
-
-    div#media_menu_bar{
-        display: block;
-    }
 }

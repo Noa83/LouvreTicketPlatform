@@ -1,11 +1,30 @@
-{%  extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+{% extends "LouvreTicketPlatformBundle::layout.html.twig" %}
 
 {% block title %}
     Tarifs - {{ parent() }}
 {% endblock %}
 
 {% block louvreticket_body %}
+    <div class="row" id="titre_tarifs">
+        <h3 class="col-sm-12">Tarifs en vigueur</h3>
+    </div>
+    <hr>
 
-    Tarifs
+    <div id="tarifs_content">
+        <div class="col-sm-3">
+            <p><h5>Tarif standard: 16€ </h5>s'applique à tous les visiteurs de plus de 12 ans et de moins de 60 ans.</p>
+        </div>
+        <div class="col-sm-3">
+            <p><h5>Tarif enfant: 8€ </h5>s'applique à tous les visiteurs agés de 4 à 12 ans. L'entrée au musée est
+            gratuite pour tous les enfants de moins de 4 ans.</p>
+        </div>
+        <div class="col-sm-3">
+            <p><h5>Tarif senior: 12€ </h5>s'applique à tous les visiteurs de plus de 60 ans.</p>
+        </div>
+        <div class="col-sm-3">
+            <p><h5>Tarif réduit: 10€ </h5>s'applique à tous les visiteurs de plus de 12 ans remplissant certaines
+            conditions (étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…).</p>
+        </div>
+    </div>
 
 {% endblock %}
