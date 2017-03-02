@@ -33,7 +33,7 @@ class ConfirmationMail
             ->setTo($email)
             ->setBody(
                 $this->twig->render(
-                    'LouvreTicketPlatformBundle:Emails:ConfirmationMail.html.twig', [
+                    'LouvreTicketPlatformBundle:Emails:ConfirmationMail.mail.twig', [
                         'recap2' => $recapTickets2,
                         'visitDate' => $visitDate,
                         'resCode' => $reservationCode

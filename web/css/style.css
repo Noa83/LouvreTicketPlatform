@@ -9,15 +9,11 @@ a.navi, div#tarifs>a, div#cgv>a{
 }
 
 div#recap_order{
-    border: 1px solid #333;
-    border-radius: 25px;
     padding-top: 30px;
     padding-left: 20px;
 }
 
 div#recap_price, div#recap_infos, div#confirmation_text{
-    border: 1px solid #333;
-    border-radius: 25px;
     padding: 10px 15px 15px 15px;
 }
 
@@ -56,6 +52,12 @@ a#back-button, input#validButton, button#pay_button, div#cgv_content{
 hr.border{
     border-top-color: #333;
 }
+
+/*div#header.row>div#blank_bar{*/
+    /*background-color: #C82D00;*/
+    /*height: 15px;*/
+    /*margin-top: 20px;*/
+/*}*/
 
 a#back-button{
     margin-top: 50px;

@@ -15,6 +15,7 @@
     {% endblock %}
 </head>
 
+
 <body>
 <div class="container" id="container-content">
     <div id="header" class="row">
@@ -26,8 +27,13 @@
                 <h1>Billetterie en Ligne du Musée du Louvre</h1>
             </div>
         </div>
+        {#<div id="blank_bar">#}
+
+        {#</div>#}
     </div>
+
     <hr class="border">
+
 
     <div>
 
@@ -82,11 +88,10 @@
     </footer>
 </div>
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="{{ asset('js/datePicker.js') }}"></script>
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
 
 
 </body>

@@ -65,4 +65,17 @@
 
         {{ form_end(formView) }}
     </div>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="{{ asset('js/datePicker.js') }}"></script>
+    {% endblock %}
+
+
+
+
+
+
 {% endblock %}
+

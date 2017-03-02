@@ -119,6 +119,8 @@ class TicketController extends Controller
             $this->get('louvre_ticketplatform.confirmation_mail')
                 ->generateMail($recapTickets1->getEmail(), $recapTickets1->getVisitDate(),
                     $recapTickets2, $recapPayment->getReservationCode());
+
+
         }
         $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step4.html.twig');
 

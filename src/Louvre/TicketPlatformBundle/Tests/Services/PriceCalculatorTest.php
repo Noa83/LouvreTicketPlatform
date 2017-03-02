@@ -10,38 +10,68 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class PriceCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetPriceCalcWhenReducedPrice()
+    const REDUCED_PRICE = 10;
+    const NORMAL_PRICE = 16;
+    const NORMAL_HALF_D_PRICE = self::NORMAL_PRICE / 2;
+    private $service;
+    private $birthDate;
+
+    protected function setUp()
     {
-        $expectedPrice = 10;
-        $price = $this->createMock(Price::class);
-        $price->expects($this->once())
-            ->method('getPrice')
-            ->will($this->returnValue($expectedPrice));
+        $this->birthDate = \DateTime::createFromFormat('d/m/Y', '27/03/1983');
+
+        $priceReducedTest = $this->createMock(Price::class);
+        $priceReducedTest//->expects($this->once())
+        ->method('getPrice')
+            ->will($this->returnValue(self::REDUCED_PRICE));
+
+        $priceTest = new Price();
+        $priceTest->setMaxAge('59');
+        $priceTest->setMinAge('12');
+        $priceTest->setPrice(self::NORMAL_PRICE);
+        $priceTest->setReducedPrice('false');
+        $priceTest = ['price' => $priceTest];
 
         $priceRepository = $this
             ->getMockBuilder(PriceRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $priceRepository->expects($this->once())
-            ->method('getReducedPrice')
-            ->will($this->returnValue($price));
+        $priceRepository//->expects($this->any())
+        ->method('getClassicsPrices')
+            ->will($this->returnValue($priceTest));
+        $priceRepository//->expects($this->once())
+        ->method('getReducedPrice')
+            ->will($this->returnValue($priceReducedTest));
 
         $entityManager = $this
             ->getMockBuilder(ObjectManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $entityManager->expects($this->once())
-            ->method('getRepository')
+        $entityManager//->expects($this->any())
+        ->method('getRepository')
             ->will($this->returnValue($priceRepository));
 
 
+        $this->service = new PriceCalculator($entityManager);
 
-        $birthDate = \DateTime::createFromFormat('d/m/Y', '27/03/1983');
-
-        $priceCal = new PriceCalculator($entityManager);
-        $result = $priceCal->getPriceCalc($birthDate, true, 'unused' );
-        $this->assertEquals($result, $expectedPrice);
+    }
 
 
+    public function testGetPriceCalcWhenReducedPrice()
+    {
+        $result = $this->service->getPriceCalc($this->birthDate, true, 'Billet journée');
+        $this->assertEquals($result, self::REDUCED_PRICE);
+    }
+
+    public function testGetPriceCalWhenHalfDayTicket()
+    {
+        $result = $this->service->getPriceCalc($this->birthDate, false, 'Billet Demie-journée');
+        $this->assertEquals($result, self::NORMAL_HALF_D_PRICE);
+    }
+
+    public function testGetPriceCalWithNoSpecs()
+    {
+        $result = $this->service->getPriceCalc($this->birthDate, false, 'Billet journée');
+        $this->assertEquals($result, self::NORMAL_PRICE);
     }
 }
