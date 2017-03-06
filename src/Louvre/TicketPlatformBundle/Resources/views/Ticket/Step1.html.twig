@@ -5,9 +5,15 @@
     {{ parent() }}
 {% endblock %}
 
-{% block louvreticket_body %}
+{% block navi1 %}
+    <li class="active"><a id="navi_active" class="navi" href="{{ path('louvre_ticket_step_1') }}">1 - Choix du billet
+            <span class="sr-only">(current)</span></a></li>
+{% endblock %}
 
-    <h4> Etape 1 - Choix du billet</h4>
+{% block louvreticket_body %}
+    <div class="col-sm-offset-2 col-sm-10">
+        <h4> Etape 1 - Choix du billet</h4>
+    </div>
 
     <div class="formstyle">
         {{ form_start(formView, {'attr': {'class': 'form-horizontal'}}) }}
@@ -57,7 +63,8 @@
             <div class="col-sm-6">
                 {{ form_widget(formView.email, {'attr': {'class': 'form-control'}}) }}
             </div>
-        </div><br>
+        </div>
+        <br>
 
         <div class="col-sm-10">
             <input id="validButton" type="submit" value="Validation" class="btn btn-default pull-right"/>

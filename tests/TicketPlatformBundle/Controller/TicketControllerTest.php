@@ -11,7 +11,7 @@ class TicketControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/step-1-choice');
+        $crawler = $client->request('GET', '/');
 
         $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
 
@@ -25,7 +25,7 @@ class TicketControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/step-1-choice');
+        $crawler = $client->request('GET', '/');
 
         $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
 
@@ -38,12 +38,17 @@ class TicketControllerTest extends WebTestCase
         $form['form_step1[email]'] = 'toto@test.fr';
 
 
-        $crawler = $client->submit($form);
+        $client->submit($form);
 
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html:contains("Nom du visiteur")')->count()
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('/infos'),
+            'response is a redirect to /infos');
+
+        $this->assertEquals(
+            'toto@test.fr',
+            $client->getRequest()->getSession()->get('formModelStep1')->getEmail()
         );
+
     }
 
 }

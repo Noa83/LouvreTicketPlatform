@@ -7,7 +7,6 @@ use Louvre\TicketPlatformBundle\Model\OwnerStep2;
 use Louvre\TicketPlatformBundle\Model\PaymentModel;
 use Louvre\TicketPlatformBundle\Type\OwnerStep2Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Louvre\TicketPlatformBundle\Type\FormStep1Type;
 
@@ -91,7 +90,7 @@ class TicketController extends Controller
                 return $this->redirectToRoute('louvre_ticket_step_4');
 
             } catch (\Stripe\Error\Card $e) {
-                $errorMessage = $e->getMessage();
+                $errorMessage = "Une erreur s'est produite, veuillez recommencer votre paiement";
                 return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
                     'recap1' => $recapTickets1,
                     'recap2' => $recapTickets2,
@@ -99,11 +98,10 @@ class TicketController extends Controller
                 ]);
             }
         }
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
             'recap1' => $recapTickets1,
             'recap2' => $recapTickets2
         ]);
-        return new Response($content);
     }
 
     public function step4Action(Request $request)
@@ -120,30 +118,25 @@ class TicketController extends Controller
                 ->generateMail($recapTickets1->getEmail(), $recapTickets1->getVisitDate(),
                     $recapTickets2, $recapPayment->getReservationCode());
 
-
+            $request->getSession()->invalidate();
         }
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Step4.html.twig');
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Step4.html.twig');
 
-        return new Response($content);
     }
 
 
     public function cgvAction()
     {
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Cgv.html.twig');
-
-        return new Response($content);
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Cgv.html.twig');
     }
 
     public function tarifsAction()
     {
-        $content = $this->get('templating')->render('LouvreTicketPlatformBundle:Ticket:Tarifs.html.twig');
-
-        return new Response($content);
+        return $this->render('LouvreTicketPlatformBundle:Ticket:Tarifs.html.twig');
     }
 
     public function mailAction()
     {
-        return $this->render('LouvreTicketPlatformBundle:Ticket:mailtrame.html.twig');
+        return $this->render('LouvreTicketPlatformBundle:Emails:ConfirmationMail.mail.twig');
     }
 }

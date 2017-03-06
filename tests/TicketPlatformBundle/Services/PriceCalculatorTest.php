@@ -21,7 +21,7 @@ class PriceCalculatorTest extends \PHPUnit_Framework_TestCase
         $this->birthDate = \DateTime::createFromFormat('d/m/Y', '27/03/1983');
 
         $priceReducedTest = $this->createMock(Price::class);
-        $priceReducedTest//->expects($this->once())
+        $priceReducedTest->expects($this->any())
         ->method('getPrice')
             ->will($this->returnValue(self::REDUCED_PRICE));
 
@@ -36,10 +36,10 @@ class PriceCalculatorTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder(PriceRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $priceRepository//->expects($this->any())
+        $priceRepository->expects($this->any())
         ->method('getClassicsPrices')
             ->will($this->returnValue($priceTest));
-        $priceRepository//->expects($this->once())
+        $priceRepository->expects($this->any())
         ->method('getReducedPrice')
             ->will($this->returnValue($priceReducedTest));
 
@@ -47,7 +47,7 @@ class PriceCalculatorTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder(ObjectManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $entityManager//->expects($this->any())
+        $entityManager->expects($this->any())
         ->method('getRepository')
             ->will($this->returnValue($priceRepository));
 

@@ -1,19 +1,30 @@
-{%  extends "LouvreTicketPlatformBundle::layout.html.twig" %}
+{% extends "LouvreTicketPlatformBundle::layout.html.twig" %}
 
 {% block title %}
     {{ parent() }}
 {% endblock %}
 
+{% block navi4 %}
+    <li class="active"><a id="navi_active" class="navi" href="{{ path('louvre_ticket_step_4') }}">4 - Confirmation de
+            paiement -
+            Email <span class="sr-only">(current)</span></a></li>
+{% endblock %}
+
 {% block louvreticket_body %}
-
-    <h4> Etape 4 - Confirmation de paiement et envoi de l'email</h4>
-
+    <div class="col-sm-offset-2 col-sm-10">
+        <h4> Etape 4 - Confirmation de paiement et envoi de l'email</h4>
+    </div>
     <div class="row formstyle">
         <div id="confirmation_text" class="col-md-offset-2 col-md-8 formstyle">Nous avons bien reçu votre paiement.<br>
-            Un email contenant votre code de réservation vient de vous être envoyé.<br>
-        Cet email fera foi de billet d'entrée dans notre musée et vous sera demandé à l'entrée<br>
-        ainsi que les pièces justifiant les tarifs réduits dont vous auriez éventuellement bénéficié.<br>
+            Un email contenant votre code de réservation vient de vous être envoyé.
+            Cet email fera foi de billet d'entrée dans notre musée et vous sera demandé à l'entrée ainsi que les pièces
+            justifiant les tarifs réduits dont vous auriez éventuellement bénéficié.<br>
         </div>
+    </div>
+
+    <div>
+        <a id="new-order-button" class="btn btn-default pull-right" href="{{ path('louvre_ticket_step_1') }}">Effectuer
+            une nouvelle commande</a>
     </div>
 
 {% endblock %}

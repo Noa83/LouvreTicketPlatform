@@ -1,25 +1,21 @@
-louvre_ticket_platform_homepage:
-    path:     /
-    defaults:
-        _controller: LouvreTicketPlatformBundle:Default:index
 
 louvre_ticket_step_1:
-    path:    /step-1-choice
+    path:    /
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step1
 
 louvre_ticket_step_2:
-    path:    /step-2-infos
+    path:    /infos
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step2
 
 louvre_ticket_step_3:
-    path:    /step-3-validation
+    path:    /validation
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step3
 
 louvre_ticket_step_4:
-    path:    /step-4-payment
+    path:    /payment
     defaults:
         _controller: LouvreTicketPlatformBundle:Ticket:step4
 
