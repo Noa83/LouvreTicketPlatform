@@ -34,3 +34,9 @@ monolog:
 #    transport: gmail
 #        username:  "%mailer_user%"
 #        password:  "%mailer_password%"
+
+
+# Twig Configuration
+twig:
+    cache: false
+
