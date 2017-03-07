@@ -5,10 +5,10 @@ namespace Louvre\TicketPlatformBundle\Controller;
 use Louvre\TicketPlatformBundle\Model\FormModelStep1;
 use Louvre\TicketPlatformBundle\Model\OwnerStep2;
 use Louvre\TicketPlatformBundle\Model\PaymentModel;
-use Louvre\TicketPlatformBundle\Type\OwnerStep2Type;
+use Louvre\TicketPlatformBundle\Form\Type\OwnerStep2Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Louvre\TicketPlatformBundle\Type\FormStep1Type;
+use Louvre\TicketPlatformBundle\Form\Type\FormStep1Type;
 
 
 class TicketController extends Controller

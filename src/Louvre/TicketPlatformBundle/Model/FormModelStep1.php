@@ -3,7 +3,6 @@
 namespace Louvre\TicketPlatformBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Louvre\TicketPlatformBundle\Validator\Constraints as LouvreAssert;
 
 

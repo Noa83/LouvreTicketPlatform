@@ -2,8 +2,8 @@
 
 namespace Louvre\TicketPlatformBundle\Services;
 
-use Doctrine\ORM\Mapping as ORM;
 use Louvre\TicketPlatformBundle\Entity\Price;
+use Louvre\TicketPlatformBundle\Model\FormModelStep2;
 
 class PriceCalculator
 {
@@ -15,7 +15,7 @@ class PriceCalculator
         $this->manager = $manager;
     }
 
-    public function getPriceCalc($birthDate, $reducedPrice, $ticketType)
+    public function getPriceCalc(FormModelStep2 $birthDate, $reducedPrice, $ticketType)
     {
 
         //Calcul de l'age
