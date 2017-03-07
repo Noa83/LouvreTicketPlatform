@@ -2,6 +2,7 @@
 
 namespace Louvre\TicketPlatformBundle\Services;
 
+use Doctrine\ORM\Mapping as ORM;
 use Louvre\TicketPlatformBundle\Entity\Ticket;
 use Louvre\TicketPlatformBundle\Entity\TicketOrder;
 use Louvre\TicketPlatformBundle\Model\FormModelStep1;

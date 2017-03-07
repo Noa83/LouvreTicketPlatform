@@ -1,9 +1,9 @@
 <?php
-namespace Louvre\TicketPlatformBundle\Tests\Type;
+namespace Louvre\TicketPlatformBundle\Tests\Form\Type;
 
 
 use Louvre\TicketPlatformBundle\Model\FormModelStep1;
-use Louvre\TicketPlatformBundle\Type\FormStep1Type;
+use Louvre\TicketPlatformBundle\Form\Type\FormStep1Type;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 
