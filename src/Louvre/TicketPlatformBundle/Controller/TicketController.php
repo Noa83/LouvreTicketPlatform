@@ -18,15 +18,12 @@ class TicketController extends Controller
         $formModelStep1 = new FormModelStep1();
         $formStep1 = $this->get('form.factory')->create(FormStep1Type::class, $formModelStep1);
 
-        if ($request->isMethod('POST')) {
-            $formStep1->handleRequest($request);
-            if ($formStep1->isValid()) {
+        if ($request->isMethod('POST') && $formStep1->handleRequest($request)->isValid()) {
 
-                $session = $request->getSession();
+            $session = $request->getSession();
 
-                $session->set('formModelStep1', $formModelStep1);
-                return $this->redirectToRoute('louvre_ticket_step_2');
-            }
+            $session->set('formModelStep1', $formModelStep1);
+            return $this->redirectToRoute('louvre_ticket_step_2');
         }
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step1.html.twig', ['formView' => $formStep1
             ->createView(),]);
@@ -42,21 +39,17 @@ class TicketController extends Controller
         $ownerStep2 = new OwnerStep2($recapTickets1->getNumberOfTickets());
         $form = $this->get('form.factory')->create(OwnerStep2Type::class, $ownerStep2);
 
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $totalPrice = $this->get('louvre_ticketplatform.price_calculator')->totalPriceCalc($ownerStep2, $recapTickets1);
 
-                $totalPrice = $this->get('louvre_ticketplatform.price_calculator')->totalPriceCalc($ownerStep2, $recapTickets1);
+            $request->getSession()->set('ownerStep2', $ownerStep2);
 
-                $request->getSession()->set('ownerStep2', $ownerStep2);
-
-                if ($totalPrice == 0) {
-                    $paymentInfo = new PaymentModel(null, $this->get('louvre_ticketplatform.reservation_code')->generateRandomSuite());
-                    $request->getSession()->set('paymentInfo', $paymentInfo);
-                    return $this->redirectToRoute('louvre_ticket_step_4');
-                } else {
-                    return $this->redirectToRoute('louvre_ticket_step_3');
-                }
+            if ($totalPrice == 0) {
+                $paymentInfo = new PaymentModel(null, $this->get('louvre_ticketplatform.reservation_code')->generateRandomSuite());
+                $request->getSession()->set('paymentInfo', $paymentInfo);
+                return $this->redirectToRoute('louvre_ticket_step_4');
+            } else {
+                return $this->redirectToRoute('louvre_ticket_step_3');
             }
         }
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step2.html.twig', ['formView' => $form->createView(),]);
@@ -66,12 +59,12 @@ class TicketController extends Controller
     {
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
-        if (empty($recapTickets1)) {
-            return $this->redirectToRoute('louvre_ticket_step_1');
+
+        if (empty($recapTickets1) || empty($recapTickets2)) {
+            $etape = empty($recapTickets1) ? 'louvre_ticket_step_1' : 'louvre_ticket_step_2';
+            return $this->redirectToRoute($etape);
         }
-        if (empty($recapTickets2)) {
-            return $this->redirectToRoute('louvre_ticket_step_2');
-        }
+
         $token = $request->get('stripeToken');
         if ($token != NULL) {
 
