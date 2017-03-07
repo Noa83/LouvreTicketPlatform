@@ -47,30 +47,16 @@ class TicketController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
 
-                $totalPrice = 0;
-                foreach ($ownerStep2->getForm2() as $form) {
-                    //Calcul du prix de chaque ticket a l'aide du service
-                    $finalPrice = $this->get('louvre_ticketplatform.price_calculator')
-                        ->getPriceCalc($form->getBirthDate(),
-                            $form->getReducedPrice(),
-                            $recapTickets1->getTicketType());
+                $totalPrice = $this->get('louvre_ticketplatform.price_calculator')->totalPriceCalc($ownerStep2, $recapTickets1);
 
-                    $form->setRealPrice($finalPrice);
+                $request->getSession()->set('ownerStep2', $ownerStep2);
 
-                    //Calcul du prix total
-                    $totalPrice += $form->getRealPrice();
-                }
-                $ownerStep2->setTotalPrice($totalPrice);
-
-                $session = $request->getSession();
-                $session->set('ownerStep2', $ownerStep2);
-
-                if($totalPrice == 0){
+                if ($totalPrice == 0) {
                     $reservationCode = $this->get('louvre_ticketplatform.reservation_code')->generateRandomSuite();
                     $paymentInfo = new PaymentModel(null, $reservationCode);
                     $request->getSession()->set('paymentInfo', $paymentInfo);
                     return $this->redirectToRoute('louvre_ticket_step_4');
-                }else{
+                } else {
                     return $this->redirectToRoute('louvre_ticket_step_3');
                 }
             }

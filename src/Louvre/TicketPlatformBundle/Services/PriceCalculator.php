@@ -61,6 +61,23 @@ class PriceCalculator
             };
         }
     }
+
+    public function totalPriceCalc($ownerStep2, $recapTickets1){
+        $totalPrice = 0;
+        foreach ($ownerStep2->getForm2() as $form) {
+            //Calcul du prix de chaque ticket a l'aide du service
+            $finalPrice = $this->getPriceCalc($form->getBirthDate(),
+                $form->getReducedPrice(),
+                $recapTickets1->getTicketType());
+
+            $form->setRealPrice($finalPrice);
+
+            //Calcul du prix total
+            $totalPrice += $form->getRealPrice();
+        }
+        $ownerStep2->setTotalPrice($totalPrice);
+        return $totalPrice;
+    }
 }
 
 
