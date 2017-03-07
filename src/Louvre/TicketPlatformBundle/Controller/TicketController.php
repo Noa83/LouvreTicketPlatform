@@ -38,9 +38,8 @@ class TicketController extends Controller
         if (empty($recapTickets1)) {
             return $this->redirectToRoute('louvre_ticket_step_1');
         }
-        $nbTickets = $recapTickets1->getNumberOfTickets();
 
-        $ownerStep2 = new OwnerStep2($nbTickets);
+        $ownerStep2 = new OwnerStep2($recapTickets1->getNumberOfTickets());
         $form = $this->get('form.factory')->create(OwnerStep2Type::class, $ownerStep2);
 
         if ($request->isMethod('POST')) {
@@ -52,8 +51,7 @@ class TicketController extends Controller
                 $request->getSession()->set('ownerStep2', $ownerStep2);
 
                 if ($totalPrice == 0) {
-                    $reservationCode = $this->get('louvre_ticketplatform.reservation_code')->generateRandomSuite();
-                    $paymentInfo = new PaymentModel(null, $reservationCode);
+                    $paymentInfo = new PaymentModel(null, $this->get('louvre_ticketplatform.reservation_code')->generateRandomSuite());
                     $request->getSession()->set('paymentInfo', $paymentInfo);
                     return $this->redirectToRoute('louvre_ticket_step_4');
                 } else {
@@ -92,9 +90,7 @@ class TicketController extends Controller
             }
         }
         return $this->render('LouvreTicketPlatformBundle:Ticket:Step3.html.twig', [
-            'recap1' => $recapTickets1,
-            'recap2' => $recapTickets2,
-            'errorMessage' => $errorMessage
+            'recap1' => $recapTickets1, 'recap2' => $recapTickets2, 'errorMessage' => $errorMessage
         ]);
     }
 
