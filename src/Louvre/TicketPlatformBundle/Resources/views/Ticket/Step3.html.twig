@@ -47,8 +47,8 @@
         </div>
         <br>
 
-        {% if errorMessage is defined %}
-            <div class="alert alert-danger">
+        {% if errorMessage is not empty %}
+            <div class="alert alert-warning">
                 {{ errorMessage }}
             </div>
         {% endif %}

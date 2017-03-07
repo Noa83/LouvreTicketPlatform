@@ -15,6 +15,18 @@ class PaymentModel
    private $reservationCode;
 
     /**
+     * PaymentModel constructor.
+     * @param $token
+     * @param $reservationCode
+     */
+    public function __construct($token, $reservationCode)
+    {
+        $this->token = $token;
+        $this->reservationCode = $reservationCode;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getReservationCode()
