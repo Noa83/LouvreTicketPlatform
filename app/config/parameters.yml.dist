@@ -15,6 +15,6 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-
+    secret: NewTokenNotSoSecretAnymore
 
     stripe_api_key: null
