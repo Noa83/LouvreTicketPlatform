@@ -5,9 +5,7 @@ namespace Louvre\TicketPlatformBundle\Services;
 use Doctrine\ORM\Mapping as ORM;
 use Louvre\TicketPlatformBundle\Entity\Ticket;
 use Louvre\TicketPlatformBundle\Entity\TicketOrder;
-use Louvre\TicketPlatformBundle\Model\FormModelStep1;
-use Louvre\TicketPlatformBundle\Model\FormModelStep2;
-use Louvre\TicketPlatformBundle\Model\PaymentModel;
+
 
 class FormToEntity
 {
@@ -18,7 +16,7 @@ class FormToEntity
         $this->manager = $manager;
     }
 
-    public function bddRecording(FormModelStep1 $recapTickets1, FormModelStep2 $recapTickets2, PaymentModel $recapPayment)
+    public function bddRecording($recapTickets1, $recapTickets2, $recapPayment)
     {
         $ticketOrder = new TicketOrder();
         $ticketOrder->setBookingCode($recapPayment->getReservationCode());
