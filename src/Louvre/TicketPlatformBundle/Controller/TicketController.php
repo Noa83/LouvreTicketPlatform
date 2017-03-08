@@ -59,10 +59,8 @@ class TicketController extends Controller
     {
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
-
-        if (empty($recapTickets1) || empty($recapTickets2)) {
-            $etape = empty($recapTickets1) ? 'louvre_ticket_step_1' : 'louvre_ticket_step_2';
-            return $this->redirectToRoute($etape);
+        if (empty($recapTickets2)) {
+            return $this->redirectToRoute('louvre_ticket_step_2');
         }
 
         $token = $request->get('stripeToken');
@@ -92,12 +90,6 @@ class TicketController extends Controller
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
         $recapPayment = $request->getSession()->get('paymentInfo');
-        if (empty($recapTickets1)) {
-            return $this->redirectToRoute('louvre_ticket_step_1');
-        }
-        if (empty($recapTickets2)) {
-            return $this->redirectToRoute('louvre_ticket_step_2');
-        }
         if (empty($recapPayment)) {
             return $this->redirectToRoute('louvre_ticket_step_3');
         }
