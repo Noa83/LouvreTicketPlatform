@@ -68,10 +68,13 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
+    spool:     "%mailer_spool%"
     transport: "%mailer_transport%"
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    auth_mode: "%mailer_auth_mode%"
+    port:      "%mailer_port%"
 
 
 

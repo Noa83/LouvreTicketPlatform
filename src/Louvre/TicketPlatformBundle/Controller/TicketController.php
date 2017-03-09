@@ -57,6 +57,7 @@ class TicketController extends Controller
 
     public function step3Action(Request $request)
     {
+        $errorMessage = '';
         $recapTickets1 = $request->getSession()->get('formModelStep1');
         $recapTickets2 = $request->getSession()->get('ownerStep2');
         if (empty($recapTickets2)) {
