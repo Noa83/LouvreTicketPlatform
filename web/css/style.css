@@ -76,7 +76,8 @@ div#footer {
 }
 
 #mailTitle {
-    color: white;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    color: black;
     width: 480px;
 }
 

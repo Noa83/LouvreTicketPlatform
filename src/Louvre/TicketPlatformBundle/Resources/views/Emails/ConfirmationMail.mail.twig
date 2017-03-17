@@ -1,8 +1,10 @@
 <!DOCTYPE Html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy"
+          content="style-src 'self' https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css http://billetterie-louvre.local/css/style.css">
 
     <title>{% block title %}Confirmation de votre achat{% endblock %}</title>
 
@@ -13,36 +15,38 @@
 </head>
 
 <body class="container">
-<header class="row">
-    <div class="col-offset-md-2 col-md-6">
+<header class="row jumbotron">
+    <div class="col-offset-md-2 col-md-5">
         <img src="{{ absolute_url(asset('images/Louvre-logo.png')) }}" alt="logo Louvre">
     </div>
-    <div class="col-md-4" id="mailTitle">
+    <div class="col-md-5" id="mailTitle">
         <br>
         <h2 class="col-md-12">Musée National du Louvre</h2>
     </div>
 </header>
 <div class="row"><br>
     <div class="col-md-offset-2 col-md-8">
-        <h2>Votre réservation pour la date du {{ visitDate }} est confirmée</h2><br>
-
-        <h4>Les billets sont nominatifs et concernent les personnes suivantes:</h4><br>
+        <h4>Votre réservation pour la date du {{ visitDate }} est confirmée<br>
+            Les billets sont nominatifs et concernent les personnes suivantes:</h4><br>
     </div>
     <div class="row">
         {% for form in recap2.form2 %}
-        <div class="col-md-offset-3 col-md-8">
-            <p>Nom: {{ form.name }} </p>
-            <p>Prénom: {{ form.firstName }} </p>
-            <p>Tarif: {{ form.realPrice }}€</p>
-        </div>
+            <div class="col-md-offset-3 col-md-8">
+                <p>Nom: {{ form.name }} </p>
+                <p>Prénom: {{ form.firstName }} </p>
+                <p>Tarif: {{ form.realPrice }}€</p>
+            </div>
         {% endfor %}
     </div>
+    <br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            Total = {{ recap2.totalPrice }}€
+            <b>Total = {{ recap2.totalPrice }}€</b>
         </div>
-    </div><br>
-    <h4 class="col-md-offset-2 col-md-8">Le code de réservation de vos billets est le {{ resCode }}</h4>
+    </div>
+    <br>
+    <h4 class="col-md-offset-2 col-md-8 alert alert-success" role="alert">Le code de réservation de vos billets est le
+        <b>{{ resCode }}</b></h4>
 </div>
 
 
